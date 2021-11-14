@@ -25,8 +25,12 @@ function handleKeypress(player, key) {
             player.stop();
             process.exit(0);
             break;
+        case 'r':
+            logger.info("keyboard", "on r");
+            player.toggleRandom();
+            break;
         case 'l':
-            logger.info("keyboard", "getting playlist");
+            logger.info("keyboard", "on l");
             player.getPlaylist();
             break;
         default:

@@ -32,8 +32,19 @@ export default function Player(options = {}) {
 
                 logger.info("player", data);
             });
+        },
+        toggleRandom(done) {
+            logger.info("player", "toggling random");
+            c.toggleRandom(function (err, data) {
+                if (err != null) {
+                    logger.error("player", `error toggling random ${error}`);
+                    done(err);
+                    return;
+                }
+                const { random } = JSON.parse(data);
+                done(null, random);
+            });
         }
-
 
     }
 }
@@ -48,23 +59,28 @@ function client(host, port) {
 
     return {
         getPlaylist(done) {
-            http.request({ ...options, path: "/requests/playlist.json" }, r => {
-                let b = '';
-                r.on('data', (chunk) => b += chunk);
-                r.on('error', e => logger.error("error!"));
-                r.on('end', () => done(null, b));
-
-            }).setTimeout(2000).end();
-
+            read("/requests/playlist.json", {}, done);
+        },
+        toggleRandom(done) {
+            read("/requests/status.json", { command: "pl_random" }, done);
         }
 
     }
 
-    function read(stream, done) {
-        const b = "";
-        stream.on('data', (chunk) => b += chunk);
-        stream.on('error', e => logger.error("error!"));
-        stream.on('end', () => done(null, b));
+    function read(base_path, extra, done) {
+        let path = base_path;
+        if (extra != null) {
+            const params = new URLSearchParams(extra);
+            path += ("?" + params.toString());
+        }
+
+        http.request({ ...options, path }, r => {
+            let b = '';
+            r.on('data', (chunk) => b += chunk);
+            r.on('error', e => logger.error("error!"));
+            r.on('end', () => done(null, b));
+
+        }).setTimeout(2000).end();
     }
 
 }
