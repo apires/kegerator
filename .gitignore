@@ -4,3 +4,5 @@
 .idea/shelf/
 .idea/*iml
 .vscode
+out
+out/*
