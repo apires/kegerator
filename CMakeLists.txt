@@ -17,7 +17,7 @@ find_package(Qt6 COMPONENTS
         Multimedia
         REQUIRED)
 
-add_executable(kegerator_qt main.cpp lib/FlowLayout.cpp lib/FlowLayout.hpp ui/RoundButton.cpp ui/RoundButton.hpp ui/MainWindow.cpp ui/MainWindow.hpp player/Track.cpp player/Track.hpp ui/Player.cpp ui/Player.hpp player/Player.cpp player/Player.hpp Kegerator.cpp Kegerator.hpp gpio/FakeGPIO.cpp gpio/FakeGPIO.hpp)
+add_executable(kegerator_qt main.cpp lib/FlowLayout.cpp lib/FlowLayout.hpp ui/RoundButton.cpp ui/RoundButton.hpp ui/MainWindow.cpp ui/MainWindow.hpp player/Track.cpp player/Track.hpp ui/Player.cpp ui/Player.hpp player/Player.cpp player/Player.hpp Kegerator.cpp Kegerator.hpp gpio/FakeGPIO.cpp gpio/FakeGPIO.hpp gpio/GPIO.cpp gpio/GPIO.hpp)
 
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")

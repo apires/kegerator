@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
     kegerator->LoadTracks(songs);
   }
 
-  gpio::FakeGPIO t = gpio::FakeGPIO();
+  auto t = gpio::FakeGPIO();
 
   t.SetPinChangeCallback(2, [&kegerator](auto _pin) {
     kegerator->PlayRandomTrack();

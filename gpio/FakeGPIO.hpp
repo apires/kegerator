@@ -7,20 +7,21 @@
 
 #include <QFileSystemWatcher>
 #include <QFile>
+#include "GPIO.hpp"
 
 namespace gpio {
 
-class FakeGPIO : public QObject {
+class FakeGPIO : public gpio::GPIO {
  public:
   explicit FakeGPIO();
   ~FakeGPIO() override;
-  void SetPinChangeCallback(u_int pin, std::function<void(u_int)> callback);
+  void SetPinChangeCallback(uint pin, std::function<void(uint)> callback) override;
 
  private:
   QFileSystemWatcher m_watcher;
   QFile m_file;
   QMetaObject::Connection m_file_changed_connection;
-  std::map<u_int, std::function<void(u_int pin)> &> m_signal_callback_map;
+  std::map<uint, std::function<void(uint pin)> &> m_signal_callback_map;
 
   void OnFileChange(const QString &path);
 };

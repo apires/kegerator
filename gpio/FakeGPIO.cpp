@@ -40,7 +40,7 @@ void FakeGPIO::OnFileChange(const QString &path) {
   m_file.resize(0);
 }
 
-void FakeGPIO::SetPinChangeCallback(u_int pin, std::function<void(u_int pin)> callback) {
+void FakeGPIO::SetPinChangeCallback(uint pin, std::function<void(uint pin)> callback) {
   m_signal_callback_map.insert({pin, callback});
 }
 
