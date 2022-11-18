@@ -1,0 +1,6 @@
+/cmake-build-debug/
+.idea/workspace.xml
+.idea/usage.statistics.xml
+.idea/shelf/
+.idea/*iml
+.vscode
