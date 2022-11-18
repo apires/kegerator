@@ -1,5 +1,6 @@
 #include "glog/logging.h"
 #include "Kegerator.hpp"
+#include "gpio/FakeGPIO.hpp"
 #include <QApplication>
 
 int main(int argc, char *argv[]) {
@@ -13,6 +14,12 @@ int main(int argc, char *argv[]) {
   if (songs != nullptr) {
     kegerator->LoadTracks(songs);
   }
+
+  gpio::FakeGPIO t = gpio::FakeGPIO();
+
+  t.SetPinChangeCallback(2, [&kegerator](auto _pin) {
+    kegerator->PlayRandomTrack();
+  });
 
   return QApplication::exec();
 }

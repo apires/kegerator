@@ -2,6 +2,7 @@
 // Created by Antonio Jose Pires on 11/13/22.
 //
 
+#include <QRandomGenerator>
 #include "Kegerator.hpp"
 
 Kegerator::Kegerator() {
@@ -17,6 +18,12 @@ void Kegerator::LoadTracks(const std::string &path) {
   ReloadButtons();
 }
 
+void Kegerator::PlayRandomTrack() {
+  auto selection = QRandomGenerator::global()->bounded((quint64) m_tracks.size());
+  auto track = m_tracks.at(selection);
+  track.Play(m_player);
+}
+
 void Kegerator::ReloadButtons() {
 
   for (const auto &t : m_tracks) {
@@ -24,7 +31,7 @@ void Kegerator::ReloadButtons() {
     b->onClick = [&]() { t.Play(m_player); };
     m_window->AddButton(b);
   }
-  
+
 }
 
 void Kegerator::BindPlayerEvents() {

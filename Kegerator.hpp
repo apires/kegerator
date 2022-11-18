@@ -16,6 +16,7 @@ class Kegerator {
  public:
   explicit Kegerator();
   void ReloadButtons();
+  void PlayRandomTrack();
   void LoadTracks(const std::string &path);
 
   void show() { m_window->show(); };
