@@ -21,14 +21,21 @@ void Kegerator::LoadTracks(const std::string &path) {
 void Kegerator::PlayRandomTrack() {
   auto selection = QRandomGenerator::global()->bounded((quint64) m_tracks.size());
   auto track = m_tracks.at(selection);
-  track.Play(m_player);
+  PlayTrack(track);
+}
+
+void Kegerator::PlayTrack(const player::Track &t) {
+  m_window->SetPlayerText(QString::fromStdString(t.GetDisplayString()));
+  t.Play(m_player);
 }
 
 void Kegerator::ReloadButtons() {
 
   for (const auto &t : m_tracks) {
     auto b = new RoundButton(t.GetTitle());
-    b->onClick = [&]() { t.Play(m_player); };
+    b->onClick = [&]() {
+      PlayTrack(t);
+    };
     m_window->AddButton(b);
   }
 

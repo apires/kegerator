@@ -28,6 +28,7 @@ class Kegerator {
   void BindWindowEvents();
   void BindPlayerEvents();
 
+  void PlayTrack(const player::Track &t);
 };
 
 #endif // KEGERATOR_QT__KEGERATOR_HPP_

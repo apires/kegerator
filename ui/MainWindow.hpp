@@ -28,6 +28,7 @@ class MainWindow : public QWidget {
   void setSliderPosition(int pos) { m_player.setSliderPosition(pos); }
   void ShowPlayer() { m_player.show(); }
   void HidePlayer() { m_player.hide(); }
+  void SetPlayerText(const QString &label) { m_player.setPlayerText(label); }
 
   std::function<void()> onPlayButtonClick;
 
@@ -37,7 +38,7 @@ class MainWindow : public QWidget {
   FlowLayout m_button_grid_layout;
   QPushButton m_kebab_menu;
   Player m_player;
-  
+
   void InitializeKebabMenu();
 };
 } // namespace ui

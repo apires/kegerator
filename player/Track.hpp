@@ -19,8 +19,9 @@ class Track {
 
   static std::vector<Track> SlurpDirectory(const std::string &directory);
 
-  [[nodiscard]] const std::string &GetArtist() const { return m_artist; }
-  [[nodiscard]] const std::string &GetTitle() const { return m_title; }
+  [[nodiscard]] std::string GetArtist() const { return m_artist; }
+  [[nodiscard]] std::string GetTitle() const { return m_title; }
+  [[nodiscard]] std::string GetDisplayString() const;
 
   void Play(const std::shared_ptr<player::Player> &player) const;
 

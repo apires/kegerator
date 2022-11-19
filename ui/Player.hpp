@@ -10,6 +10,7 @@
 #include <QSlider>
 #include <QWidget>
 #include <QObject>
+#include <QLabel>
 
 class Player : public QWidget {
 
@@ -19,6 +20,7 @@ class Player : public QWidget {
   void setStopButton();
   void setSliderMaximum(int max);
   void setSliderPosition(int pos);
+  void setPlayerText(const QString &label);
 
   std::function<void()> onPlayButtonClick;
 
@@ -26,9 +28,24 @@ class Player : public QWidget {
   const QString STOP_ICON = "⏹";
   const QString PLAY_ICON = "⏵";
 
-  QHBoxLayout m_layout;
+  QVBoxLayout m_layout;
+
+  // Metadata Section
+  QWidget m_metadata{this};
+  QHBoxLayout m_metadata_layout;
+  QLabel m_metadata_label;
+
+  // Player Control
+  QWidget m_player_control{this};
+  QHBoxLayout m_player_control_layout;
   QSlider m_slider;
   QPushButton m_button;
+  void InitializePlayerControls();
+  void InitializeMetadataSection();
+
+ protected:
+  void showEvent(QShowEvent *event) override;
+
 };
 
 #endif // KEGERATOR_QT_UI_PLAYER_HPP_

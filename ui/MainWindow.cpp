@@ -32,7 +32,7 @@ void MainWindow::InitializeKebabMenu() {
   m_kebab_menu.setFixedSize(40, 40);
   m_kebab_menu.setStyleSheet(
       "QPushButton, QLabel { background: white; border: none; font-size: 24px; border-radius: 4px;} ");
-  
+
   auto lbl = new QLabel(&m_kebab_menu);
   lbl->setText("☰");
   lbl->setFixedWidth(40);

@@ -19,16 +19,16 @@ void Track::probeMetadata() {
   QObject::connect(
       &player, &QMediaPlayer::metaDataChanged, &loop, &QEventLoop::quit
   );
-
   player.setSource(QUrl::fromLocalFile(QString::fromStdString(m_path)));
 
   // Lookup is async, so we spawn an event loop to wait for that to be over before we have values
   loop.exec();
 
   auto metadata = player.metaData();
-
-  if (!metadata[QMediaMetaData::Key::AlbumArtist].isNull()) {
-    m_artist = metadata[QMediaMetaData::Key::AlbumArtist].toString().toStdString();
+  // There's an artist key, but for some reason QT seems to pick up
+  // what ffprobe calls "artist" as ContributingArtist?
+  if (!metadata[QMediaMetaData::Key::ContributingArtist].isNull()) {
+    m_artist = metadata[QMediaMetaData::Key::ContributingArtist].toString().toStdString();
   } else {
     m_artist = "Unknown Artist";
   }
@@ -55,6 +55,20 @@ std::vector<Track> Track::SlurpDirectory(const std::string &s_directory) {
 void Track::Play(const std::shared_ptr<Player> &player) const {
   player->setSource(m_path);
   player->play();
-
 }
+
+std::string Track::GetDisplayString() const {
+  auto title = std::stringstream();
+
+  if (!GetArtist().empty() && !GetTitle().empty()) {
+    title << GetArtist() << " - " << GetTitle();
+  } else if (GetArtist().empty() && !GetTitle().empty()) {
+    title << GetTitle();
+  } else if (!GetArtist().empty() && GetTitle().empty()) {
+    // If we only have an artist, what do we do?
+    title << "Something by " << GetArtist();
+  }
+  return title.str();
+}
+
 } // namespace player
