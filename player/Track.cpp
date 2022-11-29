@@ -8,6 +8,7 @@
 #include <QDir>
 #include <QMediaPlayer>
 #include <QtCore>
+#include <QMediaMetaData>
 
 namespace player {
 
@@ -52,9 +53,9 @@ std::vector<Track> Track::SlurpDirectory(const std::string &s_directory) {
 
   return tracks;
 }
-void Track::Play(const std::shared_ptr<Player> &player) const {
-  player->setSource(m_path);
-  player->play();
+void Track::Play(Player &player) const {
+  player.setSource(m_path);
+  player.play();
 }
 
 std::string Track::GetDisplayString() const {

@@ -5,10 +5,7 @@
 #include <QRandomGenerator>
 #include "Kegerator.hpp"
 
-Kegerator::Kegerator() {
-  m_window = std::make_unique<ui::MainWindow>();
-  m_player = std::make_shared<player::Player>();
-
+Kegerator::Kegerator() : m_window(), m_player() {
   BindPlayerEvents();
   BindWindowEvents();
 }
@@ -25,7 +22,7 @@ void Kegerator::PlayRandomTrack() {
 }
 
 void Kegerator::PlayTrack(const player::Track &t) {
-  m_window->SetPlayerText(QString::fromStdString(t.GetDisplayString()));
+  m_window.SetPlayerText(QString::fromStdString(t.GetDisplayString()));
   t.Play(m_player);
 }
 
@@ -36,35 +33,35 @@ void Kegerator::ReloadButtons() {
     b->onClick = [&]() {
       PlayTrack(t);
     };
-    m_window->AddButton(b);
+    m_window.AddButton(b);
   }
 
 }
 
 void Kegerator::BindPlayerEvents() {
-  m_player->onProgress = [&](auto current, auto total) {
-    m_window->setSliderMaximum(total);
-    m_window->setSliderPosition(current);
+  m_player.onProgress = [&](auto current, auto total) {
+    m_window.setSliderMaximum(total);
+    m_window.setSliderPosition(current);
   };
-  m_player->onStart = [&]() {
-    m_window->ShowPlayer();
-    m_window->setStopButton();
+  m_player.onStart = [&]() {
+    m_window.ShowPlayer();
+    m_window.setStopButton();
   };
-  m_player->onEnd = [&]() {
-    m_window->setSliderPosition(0);
-    m_window->setPlayButton();
-    m_window->HidePlayer();
+  m_player.onEnd = [&]() {
+    m_window.setSliderPosition(0);
+    m_window.setPlayButton();
+    m_window.HidePlayer();
   };
 }
 
 void Kegerator::BindWindowEvents() {
-  m_window->onPlayButtonClick = [this]() {
-    if (m_player->isPlaying()) {
-      m_player->stop();
-      m_window->setPlayButton();
+  m_window.onPlayButtonClick = [this]() {
+    if (m_player.isPlaying()) {
+      m_player.stop();
+      m_window.setPlayButton();
     } else {
-      m_player->play();
-      m_window->setStopButton();
+      m_player.play();
+      m_window.setStopButton();
     }
   };
 }

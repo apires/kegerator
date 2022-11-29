@@ -6,7 +6,6 @@
 #define KEGERATOR_QT_PLAYER_TRACK_HPP_
 
 #include "Player.hpp"
-#include <QMediaPlayer>
 #include <string>
 namespace player {
 
@@ -23,7 +22,7 @@ class Track {
   [[nodiscard]] std::string GetTitle() const { return m_title; }
   [[nodiscard]] std::string GetDisplayString() const;
 
-  void Play(const std::shared_ptr<player::Player> &player) const;
+  void Play(Player &player) const;
 
  private:
   std::string m_path;

@@ -7,7 +7,6 @@
 
 #include "glog/logging.h"
 #include <QAudioOutput>
-#include <QMediaMetaData>
 #include <QMediaPlayer>
 
 namespace player {

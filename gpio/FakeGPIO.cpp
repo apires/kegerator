@@ -8,8 +8,7 @@
 
 namespace gpio {
 
-FakeGPIO::FakeGPIO() {
-  m_file.setFileName("/tmp/socket.keg");
+FakeGPIO::FakeGPIO() : m_file("/tmp/socket.keg") {
   auto ok = m_file.open(QIODevice::ReadWrite);
   if (!ok) {
     throw std::invalid_argument("bad file");
@@ -24,7 +23,7 @@ void FakeGPIO::OnFileChange(const QString &path) {
 
   auto buffer = m_file.readAll();
   bool ok = false;
-  auto pin = buffer.toInt(&ok);
+  auto pin = buffer.toUInt(&ok);
   if (!ok) {
     DLOG(ERROR) << "Invalid pin command - " << buffer.toStdString();
   } else {
@@ -40,12 +39,9 @@ void FakeGPIO::OnFileChange(const QString &path) {
   m_file.resize(0);
 }
 
-void FakeGPIO::SetPinChangeCallback(uint pin, std::function<void(uint pin)> callback) {
-  m_signal_callback_map.insert({pin, callback});
-}
-
 FakeGPIO::~FakeGPIO() {
   m_file.remove();
+  // Are we leaking the m_watcher members and fds?
 }
 
 } // gpio

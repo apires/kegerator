@@ -5,7 +5,7 @@
 #ifndef KEGERATOR_QT_UI_MAINWINDOW_HPP_
 #define KEGERATOR_QT_UI_MAINWINDOW_HPP_
 
-#include "../lib/FlowLayout.hpp"
+#include "FlowLayout.hpp"
 #include "Player.hpp"
 #include "RoundButton.hpp"
 #include <QWidget>
@@ -15,12 +15,8 @@ class MainWindow : public QWidget {
  public:
   explicit MainWindow(QWidget *parent = nullptr);
 
-  void AddButton(RoundButton *button) {
-    m_button_grid_layout.addWidget(button);
-  }
-  void RemoveButton(RoundButton *button) {
-    m_button_grid_layout.removeWidget(button);
-  }
+  void AddButton(RoundButton *button) { m_button_grid_layout.addWidget(button); }
+  void RemoveButton(RoundButton *button) { m_button_grid_layout.removeWidget(button); }
 
   void setStopButton() { m_player.setStopButton(); }
   void setPlayButton() { m_player.setPlayButton(); }

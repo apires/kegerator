@@ -11,7 +11,9 @@ namespace gpio {
 
 class GPIO : public QObject {
  public:
-  virtual void SetPinChangeCallback(uint pin, std::function<void(uint)> callback) = 0;
+  void SetPinChangeCallback(uint32_t pin, std::function<void(uint32_t)> callback);
+ protected:
+  std::map<uint32_t, std::function<void(uint32_t)>> m_signal_callback_map;
 };
 
 } // gpio

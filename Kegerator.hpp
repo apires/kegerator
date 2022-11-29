@@ -6,7 +6,6 @@
 #define KEGERATOR_QT__KEGERATOR_HPP_
 
 #include "glog/logging.h"
-#include "lib/FlowLayout.hpp"
 #include "player/Track.hpp"
 #include "ui/MainWindow.hpp"
 #include "ui/Player.hpp"
@@ -19,11 +18,11 @@ class Kegerator {
   void PlayRandomTrack();
   void LoadTracks(const std::string &path);
 
-  void show() { m_window->show(); };
+  void show() { m_window.show(); };
 
  private:
-  std::unique_ptr<ui::MainWindow> m_window;
-  std::shared_ptr<player::Player> m_player;
+  ui::MainWindow m_window;
+  player::Player m_player;
   std::vector<player::Track> m_tracks;
   void BindWindowEvents();
   void BindPlayerEvents();

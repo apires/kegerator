@@ -1,6 +1,6 @@
 #include "glog/logging.h"
 #include "Kegerator.hpp"
-#include "gpio/FakeGPIO.hpp"
+#include "gpio/GPIOLinux.hpp"
 #include <QApplication>
 
 int main(int argc, char *argv[]) {
@@ -15,9 +15,11 @@ int main(int argc, char *argv[]) {
     kegerator->LoadTracks(songs);
   }
 
-  auto t = gpio::FakeGPIO();
+  auto pins = std::vector<uint32_t>{21};
+  std::string path = "/dev/gpiochip0";
+  auto t = std::make_unique<gpio::GPIOLinux>(path, pins);
 
-  t.SetPinChangeCallback(2, [&kegerator](auto _pin) {
+  t->SetPinChangeCallback(21, [&kegerator](auto _pin) {
     kegerator->PlayRandomTrack();
   });
 
