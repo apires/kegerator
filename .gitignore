@@ -6,3 +6,7 @@
 .vscode
 out
 out/*
+qemu/**/vmlinuz*
+qemu/**/initrd*
+qemu/**/initram*
+qemu/**/*img
