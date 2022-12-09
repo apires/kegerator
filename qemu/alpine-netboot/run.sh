@@ -1,12 +1,13 @@
 qemu-system-aarch64 \
   -m 4G \
-  -cpu cortex-a53 \
+  -cpu cortex-a57 \
   -M virt \
-  -kernel artifacts/vmlinuz-lts \
-  -initrd artifacts/initramfs-lts \
+  -kernel image/vmlinuz-lts \
+  -initrd image/initramfs-lts \
   -device virtio-gpu-pci \
-  -hda hda.img \
+  -hda image/hda.img \
   -device nec-usb-xhci \
+  -serial stdio \
   -usb \
   -device usb-mouse \
   -device usb-kbd \
@@ -15,14 +16,6 @@ qemu-system-aarch64 \
   -device virtio-net-pci,netdev=mynet \
   -netdev user,id=mynet2,hostfwd=::5555-:22 \
   -device virtio-net-pci,netdev=mynet2 \
-  -append "rw earlyprintk modules=virtio_gpu,af_packet,ext4,virtio_blk quiet loglevel=8 console=ttyAMA0,115200 root=/dev/vda3 rootwait=1"
+  -append "rw earlyprintk modules=ext4,virtio_blk quiet loglevel=8 console=ttyAMA0,115200 root=/dev/vda3 rootwait=1"
 
-# configure udev
-
-# install:
-# qt6-qtmultimedia
-# libgpiod
-# glog
-# fonts
-# gst-plugins-ugly gst-plugins-good gst-plugins-bad
 # set KEGERATOR_SONG_LIST

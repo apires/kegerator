@@ -10,3 +10,4 @@ qemu/**/vmlinuz*
 qemu/**/initrd*
 qemu/**/initram*
 qemu/**/*img
+**/.DS_Store

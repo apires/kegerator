@@ -5,9 +5,9 @@
 #ifndef KEGERATOR_QT_UI_MAINWINDOW_HPP_
 #define KEGERATOR_QT_UI_MAINWINDOW_HPP_
 
-#include "FlowLayout.hpp"
+#include "layouts/FlowLayout.hpp"
 #include "Player.hpp"
-#include "RoundButton.hpp"
+#include "buttons/RoundButton.hpp"
 #include <QWidget>
 namespace ui {
 

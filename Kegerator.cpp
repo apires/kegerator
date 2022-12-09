@@ -3,6 +3,7 @@
 //
 
 #include <QRandomGenerator>
+#include <QDir>
 #include "Kegerator.hpp"
 
 Kegerator::Kegerator() : m_window(), m_player() {
@@ -10,13 +11,18 @@ Kegerator::Kegerator() : m_window(), m_player() {
   BindWindowEvents();
 }
 
-void Kegerator::LoadTracks(const std::string &path) {
-  m_tracks = player::Track::SlurpDirectory(path);
+void Kegerator::ReloadTracks() {
+  m_tracks.clear();
+  for (auto &path : m_track_paths) {
+    auto track = player::Track::SlurpDirectory(path);
+    DLOG(INFO) << "Loading track path from " << path;
+    std::move(track.begin(), track.end(), std::back_inserter(m_tracks));
+  }
   ReloadButtons();
 }
 
 void Kegerator::PlayRandomTrack() {
-  auto selection = QRandomGenerator::global()->bounded((quint64) m_tracks.size());
+  auto selection = QRandomGenerator::global()->bounded(static_cast<quint64>(m_tracks.size()));
   auto track = m_tracks.at(selection);
   PlayTrack(track);
 }
@@ -29,7 +35,8 @@ void Kegerator::PlayTrack(const player::Track &t) {
 void Kegerator::ReloadButtons() {
 
   for (const auto &t : m_tracks) {
-    auto b = new RoundButton(t.GetTitle());
+    DLOG(INFO) << "Found track " << t.GetDisplayString();
+    auto b = new RoundButton(t.GetDisplayString());
     b->onClick = [&]() {
       PlayTrack(t);
     };
@@ -64,4 +71,8 @@ void Kegerator::BindWindowEvents() {
       m_window.setStopButton();
     }
   };
+}
+void Kegerator::AddTrackPath(const std::string &path) {
+  m_track_paths.insert(path);
+  ReloadTracks();
 }
