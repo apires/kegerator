@@ -2,7 +2,7 @@
 
 set timeout -1
 
-if {![ file exists build_artifacts]} {
+if { ! [ file exists build_artifacts ] } {
     system mkdir build_artifacts
     system curl https://dl-cdn.alpinelinux.org/alpine/v3.17/releases/aarch64/netboot/initramfs-lts -o build_artifacts/initramfs-lts
     system curl https://dl-cdn.alpinelinux.org/alpine/v3.17/releases/aarch64/netboot/vmlinuz-lts -o build_artifacts/vmlinuz-lts
@@ -106,6 +106,9 @@ send "udev\r"
 expect -re {Scan the hardware to populate.*] } 
 send "y\r"
 expect "/ # "
+
+send "passwd -d root\r"
+expect "passwd: password for root changed by root"
 
 send "exit\r"
 send "halt\r"

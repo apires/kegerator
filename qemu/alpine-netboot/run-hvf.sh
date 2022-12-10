@@ -1,7 +1,7 @@
 qemu-system-aarch64 \
+  -M virt,accel=hvf \
   -m 4G \
-  -cpu cortex-a72 \
-  -M virt \
+  -cpu host \
   -kernel image/vmlinuz-lts \
   -initrd image/initramfs-lts \
   -device virtio-gpu-pci \
@@ -16,6 +16,6 @@ qemu-system-aarch64 \
   -device virtio-net-pci,netdev=mynet \
   -netdev user,id=mynet2,hostfwd=::5555-:22 \
   -device virtio-net-pci,netdev=mynet2 \
-  -append "rw earlyprintk modules=ext4,virtio_blk quiet loglevel=8 console=ttyAMA0,115200 root=/dev/vda3 rootwait=1"
+  -append "rw earlyprintk modules=virtio_gpu,ext4,virtio_blk loglevel=8 console=ttyAMA0,115200 root=/dev/vda3 rootwait=1"
 
 # set KEGERATOR_SONG_LIST
