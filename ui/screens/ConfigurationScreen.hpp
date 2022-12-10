@@ -7,18 +7,15 @@
 
 #include <QWidget>
 #include "../layouts/FlowLayout.hpp"
+#include "KegeratorScreen.hpp"
 
 namespace ui {
 
-class ConfigurationScreen : public QWidget {
+class ConfigurationScreen : public KegeratorScreen {
  public:
-  explicit ConfigurationScreen(QWidget *parent = nullptr);
+  ConfigurationScreen();
   void AddOption(const QString &label, const std::function<void(void)> &onClick);
-
- private:
-  QVBoxLayout m_root_layout;
-  QWidget m_button_grid;
-  FlowLayout m_button_grid_layout;
+  void InitializeBody() override;
 
 };
 } // ui

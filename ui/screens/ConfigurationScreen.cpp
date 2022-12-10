@@ -7,17 +7,6 @@
 #include "../Resources.hpp"
 
 namespace ui {
-ConfigurationScreen::ConfigurationScreen(QWidget *parent) : QWidget(parent) {
-
-  setMinimumSize(800, 600);
-  setStyleSheet("background-color: white;");
-
-  setLayout(&m_root_layout);
-
-  m_button_grid.setLayout(&m_button_grid_layout);
-  m_root_layout.addWidget(&m_button_grid, 1);
-
-}
 
 void ConfigurationScreen::AddOption(const QString &label, const std::function<void(void)> &onClick) {
 
@@ -29,7 +18,16 @@ void ConfigurationScreen::AddOption(const QString &label, const std::function<vo
     }
   });
 
-  m_button_grid_layout.addWidget(btn);
+  body().layout()->addWidget(btn);
+}
+
+void ConfigurationScreen::InitializeBody() {
+  KegeratorScreen::InitializeBody();
+  body().setStyleSheet("background: purple");
+  body().setLayout(new FlowLayout());
+}
+ConfigurationScreen::ConfigurationScreen() : KegeratorScreen() {
+  SetMenuIcon(MenuIcon::X);
 }
 
 } // ui

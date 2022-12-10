@@ -12,6 +12,7 @@ int main(int argc, char *argv[]) {
   auto kegerator = std::make_unique<Kegerator>();
 
   auto ui = std::make_unique<ui::ConfigurationScreen>();
+  ui->InitializeBody();
 
   ui->AddOption("Change Directory", [&kegerator]() -> void {
     auto path = QFileDialog::getExistingDirectory(nullptr,
