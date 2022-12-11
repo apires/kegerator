@@ -76,3 +76,13 @@ void Kegerator::AddTrackPath(const std::string &path) {
   m_track_paths.insert(path);
   ReloadTracks();
 }
+
+void Kegerator::ShowSoundboard() {
+  m_soundboard_screen.hide();
+  m_configuration_screen.show();
+}
+
+void Kegerator::ShowConfiguration() {
+  m_soundboard_screen.hide();
+  m_configuration_screen.show();
+}

@@ -40,4 +40,14 @@ void MainWindow::InitializeKebabMenu() {
   lbl->setAlignment(Qt::Alignment::enum_type::AlignCenter);
 
 }
+void MainWindow::setPlayButton() { m_player.setPlayButton(); }
+void MainWindow::setStopButton() { m_player.setStopButton(); }
+void MainWindow::RemoveButton(RoundButton *button) { m_button_grid_layout.removeWidget(button); }
+void MainWindow::AddButton(RoundButton *button) { m_button_grid_layout.addWidget(button); }
+void MainWindow::setSliderMaximum(int max) { m_player.setSliderMaximum(max); }
+void MainWindow::setSliderPosition(int pos) { m_player.setSliderPosition(pos); }
+void MainWindow::ShowPlayer() { m_player.show(); }
+void MainWindow::HidePlayer() { m_player.hide(); }
+void MainWindow::SetPlayerText(const QString &label) { m_player.setPlayerText(label); }
+MainWindow::~MainWindow() {}
 } // namespace ui

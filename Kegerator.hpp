@@ -11,6 +11,8 @@
 #include "ui/MainWindow.hpp"
 #include "ui/Player.hpp"
 #include "ui/buttons/RoundButton.hpp"
+#include "ui/screens/SoundboardScreen.hpp"
+#include "ui/screens/ConfigurationScreen.hpp"
 
 class Kegerator {
  public:
@@ -20,10 +22,12 @@ class Kegerator {
   void AddTrackPath(const std::string &);
   void ReloadTracks();
 
-  void show() { m_window.show(); }
+  void ShowSoundboard();
+  void ShowConfiguration();
 
  private:
-  ui::MainWindow m_window;
+  ui::ConfigurationScreen m_configuration_screen;
+  ui::SoundboardScreen m_soundboard_screen;
   player::Player m_player;
 
   std::set<std::string> m_track_paths;

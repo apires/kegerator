@@ -14,17 +14,18 @@ namespace ui {
 class MainWindow : public QWidget {
  public:
   explicit MainWindow(QWidget *parent = nullptr);
+  ~MainWindow() override;
 
-  void AddButton(RoundButton *button) { m_button_grid_layout.addWidget(button); }
-  void RemoveButton(RoundButton *button) { m_button_grid_layout.removeWidget(button); }
+  void AddButton(RoundButton *button);
+  void RemoveButton(RoundButton *button);
 
-  void setStopButton() { m_player.setStopButton(); }
-  void setPlayButton() { m_player.setPlayButton(); }
-  void setSliderMaximum(int max) { m_player.setSliderMaximum(max); }
-  void setSliderPosition(int pos) { m_player.setSliderPosition(pos); }
-  void ShowPlayer() { m_player.show(); }
-  void HidePlayer() { m_player.hide(); }
-  void SetPlayerText(const QString &label) { m_player.setPlayerText(label); }
+  void setStopButton();
+  void setPlayButton();
+  void setSliderMaximum(int max);
+  void setSliderPosition(int pos);
+  void ShowPlayer();
+  void HidePlayer();
+  void SetPlayerText(const QString &label);
 
   std::function<void()> onPlayButtonClick;
 

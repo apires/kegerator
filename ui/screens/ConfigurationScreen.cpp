@@ -23,9 +23,9 @@ void ConfigurationScreen::AddOption(const QString &label, const std::function<vo
 
 void ConfigurationScreen::InitializeBody() {
   KegeratorScreen::InitializeBody();
-  body().setStyleSheet("background: purple");
   body().setLayout(new FlowLayout());
 }
+
 ConfigurationScreen::ConfigurationScreen() : KegeratorScreen() {
   SetMenuIcon(MenuIcon::X);
 }
