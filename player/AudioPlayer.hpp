@@ -2,8 +2,8 @@
 // Created by Antonio Jose Pires on 11/13/22.
 //
 
-#ifndef KEGERATOR_QT_PLAYER_PLAYER_HPP_
-#define KEGERATOR_QT_PLAYER_PLAYER_HPP_
+#ifndef KEGERATOR_QT_PLAYER_AUDIOPLAYER_HPP_
+#define KEGERATOR_QT_PLAYER_AUDIOPLAYER_HPP_
 
 #include "glog/logging.h"
 #include <QAudioOutput>
@@ -11,9 +11,9 @@
 
 namespace player {
 
-class Player {
+class AudioPlayer {
  public:
-  explicit Player();
+  explicit AudioPlayer();
   void setSource(const std::string &path);
   void play();
   void stop();
@@ -32,4 +32,4 @@ class Player {
 
 } // namespace player
 
-#endif // KEGERATOR_QT_PLAYER_PLAYER_HPP_
+#endif // KEGERATOR_QT_PLAYER_AUDIOPLAYER_HPP_

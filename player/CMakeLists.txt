@@ -1,8 +1,8 @@
 find_package(Qt6 REQUIRED COMPONENTS Multimedia)
 
 add_library(KegeratorPlayer
-        Player.cpp
-        Track.cpp)
+        AudioPlayer.cpp
+        AudioTrack.cpp)
 
 target_link_libraries(KegeratorPlayer
         Qt6::Multimedia

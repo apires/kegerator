@@ -3,13 +3,13 @@
 //
 
 #include "KegeratorScreen.hpp"
-
+#include "glog/logging.h"
 #include <QLabel>
 
 namespace ui {
 
 KegeratorScreen::KegeratorScreen(QWidget *parent) : QWidget(parent) {
-  setMinimumSize(800, 600);
+//  setMinimumSize(800, 600);
 
   InitializeHeader();
 
@@ -19,6 +19,8 @@ KegeratorScreen::KegeratorScreen(QWidget *parent) : QWidget(parent) {
 
   layout()->addWidget(&m_header);
   layout()->addWidget(&m_body);
+
+  setObjectName("rootWindow");
 }
 
 void KegeratorScreen::InitializeHeader() {
@@ -40,6 +42,14 @@ void KegeratorScreen::InitializeHeader() {
   )");
   m_menu_button.setFixedSize(38, 38);
   SetMenuIcon(MenuIcon::Hamburger);
+
+  QObject::connect(&m_menu_button, &QPushButton::pressed, this, [this]() {
+    if (onMenuButtonClick != nullptr) {
+      onMenuButtonClick();
+    } else {
+      DLOG(INFO) << "No menu button handler installed";
+    }
+  });
 }
 
 void KegeratorScreen::SetMenuIcon(MenuIcon icon) {
@@ -59,11 +69,14 @@ QString KegeratorScreen::getMenuIconRepresentation(MenuIcon icon) {
 
 void KegeratorScreen::InitializeBody() {
   m_body.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-  m_body.setStyleSheet("background-color: lightblue");
+  m_body.setStyleSheet("background-color: transparent");
 }
 
 QWidget &KegeratorScreen::body() {
   return m_body;
+}
+void KegeratorScreen::SetOnMenuButtonClick(const std::function<void()> &on_menu_button_click) {
+  onMenuButtonClick = on_menu_button_click;
 }
 
 }

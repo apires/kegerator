@@ -6,9 +6,9 @@
 #define KEGERATOR_QT__KEGERATOR_HPP_
 
 #include <set>
+#include <QStackedLayout>
 #include "glog/logging.h"
-#include "player/Track.hpp"
-#include "ui/MainWindow.hpp"
+#include "player/AudioTrack.hpp"
 #include "ui/Player.hpp"
 #include "ui/buttons/RoundButton.hpp"
 #include "ui/screens/SoundboardScreen.hpp"
@@ -28,15 +28,15 @@ class Kegerator {
  private:
   ui::ConfigurationScreen m_configuration_screen;
   ui::SoundboardScreen m_soundboard_screen;
-  player::Player m_player;
+  player::AudioPlayer m_player;
 
   std::set<std::string> m_track_paths;
-  std::vector<player::Track> m_tracks;
+  std::vector<player::AudioTrack> m_tracks;
 
   void BindWindowEvents();
   void BindPlayerEvents();
 
-  void PlayTrack(const player::Track &t);
+  void PlayTrack(const player::AudioTrack &t);
 };
 
 #endif // KEGERATOR_QT__KEGERATOR_HPP_

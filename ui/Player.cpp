@@ -5,6 +5,7 @@
 #include "Player.hpp"
 #include "glog/logging.h"
 
+namespace ui {
 Player::Player(QWidget *parent)
     : QWidget(parent, Qt::WindowFlags::enum_type::Widget) {
 
@@ -55,4 +56,5 @@ void Player::showEvent(QShowEvent *event) {
   } else {
     m_metadata.show();
   }
+}
 }

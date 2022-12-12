@@ -9,29 +9,25 @@
 #include "../buttons/RoundButton.hpp"
 #include "../layouts/FlowLayout.hpp"
 #include "../Player.hpp"
+#include "glog/logging.h"
+
 namespace ui {
 class SoundboardScreen : public KegeratorScreen {
 
  public:
   void InitializeBody() override;
 
-  void AddButton(RoundButton *button) { body().layout()->addWidget(button); }
-  void RemoveButton(RoundButton *button) { body().layout()->removeWidget(button); }
+  void AddButton(RoundButton *button);
+  void RemoveButton(RoundButton *button);
 
-  void SetStopButton() { m_player.setStopButton(); }
-  void SetPlayButton() { m_player.setPlayButton(); }
-  void SetSliderMaximum(int max) { m_player.setSliderMaximum(max); }
-  void SetSliderPosition(int pos) { m_player.setSliderPosition(pos); }
-  void ShowPlayer() { m_player.show(); }
-  void HidePlayer() { m_player.hide(); }
+  ui::Player &Player() { return m_player; }
   void SetPlayerText(const QString &label) { m_player.setPlayerText(label); }
 
   std::function<void()> onPlayButtonClick;
 
  private:
   QWidget m_button_grid;
-  Player m_player;
-
+  ui::Player m_player;
 };
 }
 

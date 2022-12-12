@@ -3,7 +3,6 @@ find_package(Qt6 COMPONENTS
         REQUIRED)
 
 add_library(KegeratorUI
-        MainWindow.cpp
         Player.cpp
         layouts/FlowLayout.cpp
         buttons/RoundButton.cpp screens/ConfigurationScreen.cpp screens/ConfigurationScreen.hpp screens/SoundboardScreen.cpp screens/SoundboardScreen.hpp screens/KegeratorScreen.cpp screens/KegeratorScreen.hpp Resources.hpp)

@@ -16,8 +16,16 @@ void SoundboardScreen::InitializeBody() {
   m_player.onPlayButtonClick = [this]() {
     if (onPlayButtonClick) onPlayButtonClick();
   };
-  m_player.hide();
 
+  KegeratorScreen::setStyleSheet(R"(
+    #rootWindow {
+      background-color: #51B3F0;
+    }
+  )");
 }
-
+void SoundboardScreen::AddButton(RoundButton *button) {
+  DLOG(INFO) << "Adding Button";
+  body().layout()->addWidget(button);
+}
+void SoundboardScreen::RemoveButton(RoundButton *button) { body().layout()->removeWidget(button); }
 }

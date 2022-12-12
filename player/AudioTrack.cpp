@@ -2,8 +2,8 @@
 // Created by Antonio Jose Pires on 11/13/22.
 //
 
-#include "Track.hpp"
-#include "Player.hpp"
+#include "AudioTrack.hpp"
+#include "AudioPlayer.hpp"
 #include "glog/logging.h"
 #include <QDir>
 #include <QMediaPlayer>
@@ -12,7 +12,7 @@
 
 namespace player {
 
-void Track::probeMetadata() {
+void AudioTrack::probeMetadata() {
 
   QMediaPlayer player;
   QEventLoop loop;
@@ -42,9 +42,9 @@ void Track::probeMetadata() {
 
 }
 
-std::vector<Track> Track::SlurpDirectory(const std::string &s_directory) {
+std::vector<AudioTrack> AudioTrack::SlurpDirectory(const std::string &s_directory) {
   auto dir = new QDir(QString::fromStdString((s_directory)));
-  auto tracks = std::vector<Track>();
+  auto tracks = std::vector<AudioTrack>();
 
   for (const auto &entry : dir->entryList(QDir::Filters::enum_type::Files)) {
     auto p = dir->absolutePath().toStdString() + "/" + entry.toStdString();
@@ -53,12 +53,12 @@ std::vector<Track> Track::SlurpDirectory(const std::string &s_directory) {
 
   return tracks;
 }
-void Track::Play(Player &player) const {
+void AudioTrack::Play(AudioPlayer &player) const {
   player.setSource(m_path);
   player.play();
 }
 
-std::string Track::GetDisplayString() const {
+std::string AudioTrack::GetDisplayString() const {
   auto title = std::stringstream();
 
   if (!GetArtist().empty() && !GetTitle().empty()) {

@@ -12,6 +12,7 @@
 #include <QObject>
 #include <QLabel>
 
+namespace ui {
 class Player : public QWidget {
 
  public:
@@ -35,7 +36,7 @@ class Player : public QWidget {
   QHBoxLayout m_metadata_layout;
   QLabel m_metadata_label;
 
-  // Player Control
+  // AudioPlayer Control
   QWidget m_player_control{this};
   QHBoxLayout m_player_control_layout;
   QSlider m_slider;
@@ -47,5 +48,5 @@ class Player : public QWidget {
   void showEvent(QShowEvent *event) override;
 
 };
-
+}
 #endif // KEGERATOR_QT_UI_PLAYER_HPP_

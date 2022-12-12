@@ -2,27 +2,27 @@
 // Created by Antonio Jose Pires on 11/13/22.
 //
 
-#ifndef KEGERATOR_QT_PLAYER_TRACK_HPP_
-#define KEGERATOR_QT_PLAYER_TRACK_HPP_
+#ifndef KEGERATOR_QT_PLAYER_AUDIOTRACK_HPP_
+#define KEGERATOR_QT_PLAYER_AUDIOTRACK_HPP_
 
-#include "Player.hpp"
+#include "AudioPlayer.hpp"
 #include <string>
 namespace player {
 
-class Track {
+class AudioTrack {
  public:
-  explicit Track(const std::string &path) {
+  explicit AudioTrack(const std::string &path) {
     m_path = path;
     probeMetadata();
   }
 
-  static std::vector<Track> SlurpDirectory(const std::string &directory);
+  static std::vector<AudioTrack> SlurpDirectory(const std::string &directory);
 
   [[nodiscard]] std::string GetArtist() const { return m_artist; }
   [[nodiscard]] std::string GetTitle() const { return m_title; }
   [[nodiscard]] std::string GetDisplayString() const;
 
-  void Play(Player &player) const;
+  void Play(AudioPlayer &player) const;
 
  private:
   std::string m_path;
@@ -33,4 +33,4 @@ class Track {
 
 };
 } // namespace player
-#endif // KEGERATOR_QT_PLAYER_TRACK_HPP_
+#endif // KEGERATOR_QT_PLAYER_AUDIOTRACK_HPP_

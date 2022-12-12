@@ -24,6 +24,11 @@ class KegeratorScreen : public QWidget {
   QWidget m_header;
   QWidget m_body;
   QPushButton m_menu_button;
+  std::function<void()> onMenuButtonClick;
+
+ public:
+  void SetOnMenuButtonClick(const std::function<void()> &);
+ private:
 
   void InitializeHeader();
 

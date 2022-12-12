@@ -2,10 +2,10 @@
 // Created by Antonio Jose Pires on 11/13/22.
 //
 
-#include "Player.hpp"
+#include "AudioPlayer.hpp"
 
 namespace player {
-Player::Player() {
+AudioPlayer::AudioPlayer() {
 
   m_output = std::make_unique<QAudioOutput>();
   m_player = std::make_unique<QMediaPlayer>();
@@ -33,16 +33,16 @@ Player::Player() {
                      }
                    });
 }
-void Player::setSource(const std::string &path) {
+void AudioPlayer::setSource(const std::string &path) {
   m_player->setSource(QUrl::fromLocalFile(QString::fromStdString(path)));
 }
-void Player::play() {
+void AudioPlayer::play() {
   if (onStart)
     onStart();
   m_player->play();
 }
 
-void Player::stop() {
+void AudioPlayer::stop() {
   if (onEnd)
     onEnd();
   m_player->stop();
