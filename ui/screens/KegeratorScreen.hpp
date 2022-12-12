@@ -12,7 +12,7 @@ namespace ui {
 class KegeratorScreen : public QWidget {
  public:
   enum MenuIcon {
-    Hamburger,
+    Grid,
     X
   };
 
@@ -32,10 +32,9 @@ class KegeratorScreen : public QWidget {
 
   void InitializeHeader();
 
-  static QString getMenuIconRepresentation(MenuIcon icon);
-
  protected:
   QWidget &body();
+  static QIcon getMenuIconRepresentation(MenuIcon icon);
 
 };
 }

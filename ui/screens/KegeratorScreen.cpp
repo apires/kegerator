@@ -5,6 +5,8 @@
 #include "KegeratorScreen.hpp"
 #include "glog/logging.h"
 #include <QLabel>
+#include <QIcon>
+#include <QDirIterator>
 
 namespace ui {
 
@@ -41,7 +43,7 @@ void KegeratorScreen::InitializeHeader() {
     }
   )");
   m_menu_button.setFixedSize(38, 38);
-  SetMenuIcon(MenuIcon::Hamburger);
+  SetMenuIcon(MenuIcon::Grid);
 
   QObject::connect(&m_menu_button, &QPushButton::pressed, this, [this]() {
     if (onMenuButtonClick != nullptr) {
@@ -53,16 +55,16 @@ void KegeratorScreen::InitializeHeader() {
 }
 
 void KegeratorScreen::SetMenuIcon(MenuIcon icon) {
-  m_menu_button.setText(getMenuIconRepresentation(icon));
+  m_menu_button.setIcon(getMenuIconRepresentation(icon));
 }
 
-QString KegeratorScreen::getMenuIconRepresentation(MenuIcon icon) {
+QIcon KegeratorScreen::getMenuIconRepresentation(MenuIcon icon) {
   switch (icon) {
-    case Hamburger: {
-      return "≡";
+    case Grid: {
+      return QIcon(":kegerator/svg/grid-menu.svg");
     }
     case X: {
-      return "X";
+      return QIcon(":kegerator/svg/close.svg");
     }
   }
 }

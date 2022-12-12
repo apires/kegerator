@@ -4,14 +4,13 @@
 
 #include <QPushButton>
 #include "ConfigurationScreen.hpp"
-#include "../Resources.hpp"
 
 namespace ui {
 
 void ConfigurationScreen::AddOption(const QString &label, const std::function<void(void)> &onClick) {
 
   auto btn = new QPushButton(label, this);
-  btn->setFont(R::EMOJI_FONT);
+  btn->setFont(QFont("Sans Serif, Apple Color Emoji", 48));
   QObject::connect(btn, &QPushButton::pressed, this, [onClick]() {
     if (onClick != nullptr) {
       onClick();

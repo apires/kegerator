@@ -11,8 +11,8 @@ int main(int argc, char *argv[]) {
 
   auto kegerator = std::make_unique<Kegerator>();
 
-  kegerator->AddTrackPath("/Users/apires/mp3_samples");
-  kegerator->ShowSoundboard();
+//  kegerator->AddTrackPath("/Users/apires/mp3_samples");
+//  kegerator->ShowSoundboard();
 
 //  kegerator->show();
 //

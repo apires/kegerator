@@ -6,7 +6,6 @@
 #define KEGERATOR_QT__KEGERATOR_HPP_
 
 #include <set>
-#include <QStackedLayout>
 #include "glog/logging.h"
 #include "player/AudioTrack.hpp"
 #include "ui/Player.hpp"
