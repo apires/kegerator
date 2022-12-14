@@ -20,7 +20,7 @@ class AudioTrack {
 
   [[nodiscard]] std::string GetArtist() const { return m_artist; }
   [[nodiscard]] std::string GetTitle() const { return m_title; }
-  [[nodiscard]] std::string GetDisplayString() const;
+  [[nodiscard]] const std::string GetDisplayString() const;
 
   void Play(AudioPlayer &player) const;
 

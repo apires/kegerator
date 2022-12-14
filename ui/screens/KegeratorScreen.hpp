@@ -5,8 +5,8 @@
 #ifndef KEGERATOR_QT_UI_SCREENS_KEGERATORSCREEN_HPP_
 #define KEGERATOR_QT_UI_SCREENS_KEGERATORSCREEN_HPP_
 
-#include <QVBoxLayout>
 #include <QPushButton>
+#include <QVBoxLayout>
 
 namespace ui {
 class KegeratorScreen : public QWidget {
@@ -19,23 +19,19 @@ class KegeratorScreen : public QWidget {
   explicit KegeratorScreen(QWidget *parent = nullptr);
   void SetMenuIcon(MenuIcon icon);
   virtual void InitializeBody();
+  void SetOnMenuButtonClick(const std::function<void()> &);
 
  private:
   QWidget m_header;
   QWidget m_body;
   QPushButton m_menu_button;
   std::function<void()> onMenuButtonClick;
-
- public:
-  void SetOnMenuButtonClick(const std::function<void()> &);
- private:
-
   void InitializeHeader();
 
  protected:
   QWidget &body();
   static QIcon getMenuIconRepresentation(MenuIcon icon);
-
+  QVBoxLayout m_layout;
 };
 }
 #endif //KEGERATOR_QT_UI_SCREENS_KEGERATORSCREEN_HPP_

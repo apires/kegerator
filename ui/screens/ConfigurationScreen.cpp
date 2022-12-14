@@ -4,6 +4,7 @@
 
 #include <QPushButton>
 #include "ConfigurationScreen.hpp"
+#include "../buttons/RoundButton.hpp"
 
 namespace ui {
 
@@ -24,9 +25,15 @@ void ConfigurationScreen::InitializeBody() {
   KegeratorScreen::InitializeBody();
   body().setLayout(new FlowLayout());
 }
+void ConfigurationScreen::AddOption(QIcon icon, const std::function<void(void)> &onClick) {
 
-ConfigurationScreen::ConfigurationScreen() : KegeratorScreen() {
-  SetMenuIcon(MenuIcon::X);
+  auto btn = new RoundButton(std::move(icon), "", this);
+  QObject::connect(btn, &QPushButton::pressed, this, [onClick]() {
+    if (onClick != nullptr) {
+      onClick();
+    }
+  });
+  body().layout()->addWidget(btn);
 }
 
 } // ui

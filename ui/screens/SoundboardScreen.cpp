@@ -9,10 +9,10 @@ namespace ui {
 void SoundboardScreen::InitializeBody() {
   KegeratorScreen::InitializeBody();
   body().setLayout(new FlowLayout());
-
-  layout()->addWidget(&m_player);
-  layout()->setAlignment(&m_player, Qt::AlignHCenter);
-  m_player.setFixedWidth(width() / 2);
+  m_layout.addWidget(&m_player);
+  m_layout.addSpacing(12);
+  m_layout.setAlignment(&m_player, Qt::AlignHCenter);
+  m_player.setFixedWidth(body().width() / 2);
   m_player.onPlayButtonClick = [this]() {
     if (onPlayButtonClick) onPlayButtonClick();
   };
@@ -22,6 +22,7 @@ void SoundboardScreen::InitializeBody() {
       background-color: #51B3F0;
     }
   )");
+
 }
 void SoundboardScreen::AddButton(RoundButton *button) {
   DLOG(INFO) << "Adding Button";

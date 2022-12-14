@@ -9,9 +9,10 @@
 
 class RoundButton : public QPushButton {
 
-public:
-  RoundButton(const std::string &text, QWidget *parent);
-  explicit RoundButton(const std::string &text);
+ public:
+  explicit RoundButton(const QString &text, QWidget *parent);
+  explicit RoundButton(const std::string &text, QWidget *parent);
+  explicit RoundButton(QIcon icon, const QString &text, QWidget *parent);
   std::function<void()> onClick;
 };
 

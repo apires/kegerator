@@ -13,10 +13,12 @@ namespace ui {
 
 class ConfigurationScreen : public KegeratorScreen {
  public:
-  ConfigurationScreen();
+  explicit ConfigurationScreen(QWidget *p_widget) : KegeratorScreen(p_widget) {
+    SetMenuIcon(MenuIcon::X);
+  }
   void AddOption(const QString &label, const std::function<void(void)> &onClick);
+  void AddOption(QIcon icon, const std::function<void(void)> &onClick);
   void InitializeBody() override;
-
 };
 } // ui
 

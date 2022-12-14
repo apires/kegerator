@@ -4,22 +4,16 @@
 
 #include <QRandomGenerator>
 #include <QDir>
+#include <QFileDialog>
 #include "Kegerator.hpp"
 
 Kegerator::Kegerator() {
-  m_configuration_screen.InitializeBody();
-  m_soundboard_screen.InitializeBody();
-
   BindPlayerEvents();
   BindWindowEvents();
 
-  m_configuration_screen.SetOnMenuButtonClick([this]() {
-    m_configuration_screen.hide();
-  });
-  m_soundboard_screen.SetOnMenuButtonClick([this]() {
-    ShowConfiguration();
-  });
+  BuildConfigurationMenu();
 
+  m_window.show();
 }
 
 void Kegerator::ReloadTracks() {
@@ -39,7 +33,7 @@ void Kegerator::PlayRandomTrack() {
 }
 
 void Kegerator::PlayTrack(const player::AudioTrack &t) {
-  m_soundboard_screen.SetPlayerText(QString::fromStdString(t.GetDisplayString()));
+  m_window.soundboard()->SetPlayerText(QString::fromStdString(t.GetDisplayString()));
   t.Play(m_player);
 }
 
@@ -47,39 +41,37 @@ void Kegerator::ReloadButtons() {
   DLOG(INFO) << "Reloading Buttons";
   for (const auto &t : m_tracks) {
     DLOG(INFO) << "Found track " << t.GetDisplayString();
-    auto b = new RoundButton(t.GetDisplayString());
-    b->onClick = [&]() {
-      PlayTrack(t);
-    };
-    m_soundboard_screen.AddButton(b);
+    auto b = new RoundButton(t.GetDisplayString(), nullptr);
+    b->onClick = [&]() { PlayTrack(t); };
+    m_window.soundboard()->AddButton(b);
   }
 
 }
 
 void Kegerator::BindPlayerEvents() {
   m_player.onProgress = [&](auto current, auto total) {
-    m_soundboard_screen.Player().setSliderMaximum(total);
-    m_soundboard_screen.Player().setSliderPosition(current);
+    m_window.soundboard()->Player().setSliderMaximum(total);
+    m_window.soundboard()->Player().setSliderPosition(current);
   };
   m_player.onStart = [&]() {
-    m_soundboard_screen.Player().show();
-    m_soundboard_screen.Player().setStopButton();
+    m_window.soundboard()->Player().show();
+    m_window.soundboard()->Player().setStopButton();
   };
   m_player.onEnd = [&]() {
-    m_soundboard_screen.Player().setSliderPosition(0);
-    m_soundboard_screen.Player().setPlayButton();
-    m_soundboard_screen.Player().hide();
+    m_window.soundboard()->Player().setSliderPosition(0);
+    m_window.soundboard()->Player().setPlayButton();
+    m_window.soundboard()->Player().hide();
   };
 }
 
 void Kegerator::BindWindowEvents() {
-  m_soundboard_screen.onPlayButtonClick = [this]() {
+  m_window.soundboard()->onPlayButtonClick = [this]() {
     if (m_player.isPlaying()) {
       m_player.stop();
-      m_soundboard_screen.Player().setPlayButton();
+      m_window.soundboard()->Player().setPlayButton();
     } else {
       m_player.play();
-      m_soundboard_screen.Player().setStopButton();
+      m_window.soundboard()->Player().setStopButton();
     }
   };
 }
@@ -88,12 +80,16 @@ void Kegerator::AddTrackPath(const std::string &path) {
   ReloadTracks();
 }
 
-void Kegerator::ShowConfiguration() {
-//  m_soundboard_screen.hide();
-  m_configuration_screen.show();
-}
+void Kegerator::BuildConfigurationMenu() {
+  auto configuration = m_window.configuration();
 
-void Kegerator::ShowSoundboard() {
-//  m_configuration_screen.hide();
-  m_soundboard_screen.show();
+  configuration->AddOption(QIcon(":kegerator/svg/open-folder-audio.svg"), [&]() -> void {
+    auto path = QFileDialog::getExistingDirectory(nullptr,
+                                                  "Select Import Path",
+                                                  QDir::homePath(),
+                                                  QFileDialog::Options::enum_type::ReadOnly
+                                                      | QFileDialog::Options::enum_type::ShowDirsOnly);
+    AddTrackPath(path.toStdString());
+  });
+
 }

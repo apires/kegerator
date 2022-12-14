@@ -17,6 +17,8 @@ Player::Player(QWidget *parent)
 
   m_layout.addWidget(&m_metadata);
   m_layout.addWidget(&m_player_control);
+
+  setVisible(false);
 }
 
 void Player::InitializeMetadataSection() {

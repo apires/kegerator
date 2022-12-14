@@ -13,7 +13,7 @@ qt_add_library(KegeratorUI
         screens/SoundboardScreen.cpp
         screens/SoundboardScreen.hpp
         screens/KegeratorScreen.cpp
-        screens/KegeratorScreen.hpp)
+        screens/KegeratorScreen.hpp MainWindow.cpp MainWindow.hpp)
 
 
 target_link_libraries(KegeratorUI
@@ -24,4 +24,5 @@ qt6_add_resources(KegeratorUI "KegeratorAssets"
         PREFIX "/kegerator"
         FILES
         svg/grid-menu.svg
-        svg/close.svg)
+        svg/close.svg
+        svg/open-folder-audio.svg)

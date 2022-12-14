@@ -10,8 +10,7 @@
 #include "player/AudioTrack.hpp"
 #include "ui/Player.hpp"
 #include "ui/buttons/RoundButton.hpp"
-#include "ui/screens/SoundboardScreen.hpp"
-#include "ui/screens/ConfigurationScreen.hpp"
+#include "ui/MainWindow.hpp"
 
 class Kegerator {
  public:
@@ -21,12 +20,8 @@ class Kegerator {
   void AddTrackPath(const std::string &);
   void ReloadTracks();
 
-  void ShowSoundboard();
-  void ShowConfiguration();
-
  private:
-  ui::ConfigurationScreen m_configuration_screen;
-  ui::SoundboardScreen m_soundboard_screen;
+  ui::MainWindow m_window;
   player::AudioPlayer m_player;
 
   std::set<std::string> m_track_paths;
@@ -36,6 +31,7 @@ class Kegerator {
   void BindPlayerEvents();
 
   void PlayTrack(const player::AudioTrack &t);
+  void BuildConfigurationMenu();
 };
 
 #endif // KEGERATOR_QT__KEGERATOR_HPP_

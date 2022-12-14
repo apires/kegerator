@@ -58,7 +58,7 @@ void AudioTrack::Play(AudioPlayer &player) const {
   player.play();
 }
 
-std::string AudioTrack::GetDisplayString() const {
+const std::string AudioTrack::GetDisplayString() const {
   auto title = std::stringstream();
 
   if (!GetArtist().empty() && !GetTitle().empty()) {

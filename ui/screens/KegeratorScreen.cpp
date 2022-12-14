@@ -7,20 +7,21 @@
 #include <QLabel>
 #include <QIcon>
 #include <QDirIterator>
+#include <QHBoxLayout>
 
 namespace ui {
 
 KegeratorScreen::KegeratorScreen(QWidget *parent) : QWidget(parent) {
-//  setMinimumSize(800, 600);
 
   InitializeHeader();
 
-  setLayout(new QVBoxLayout());
-  layout()->setContentsMargins(0, 0, 0, 0);
-  layout()->setAlignment(Qt::AlignTop);
+  setLayout(&m_layout);
 
-  layout()->addWidget(&m_header);
-  layout()->addWidget(&m_body);
+  m_layout.setContentsMargins(0, 0, 0, 0);
+  m_layout.setAlignment(Qt::AlignTop);
+
+  m_layout.addWidget(&m_header);
+  m_layout.addWidget(&m_body);
 
   setObjectName("rootWindow");
 }
@@ -43,8 +44,6 @@ void KegeratorScreen::InitializeHeader() {
     }
   )");
   m_menu_button.setFixedSize(38, 38);
-  SetMenuIcon(MenuIcon::Grid);
-
   QObject::connect(&m_menu_button, &QPushButton::pressed, this, [this]() {
     if (onMenuButtonClick != nullptr) {
       onMenuButtonClick();
