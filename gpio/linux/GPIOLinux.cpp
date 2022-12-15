@@ -3,7 +3,7 @@
 //
 
 #include <string>
-#include <glog/logging.h>
+#include "glog/logging.h"
 #include "GPIOLinux.hpp"
 
 namespace gpio {

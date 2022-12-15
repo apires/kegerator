@@ -5,7 +5,7 @@
 #ifndef KEGERATOR_QT_GPIO_GPIOLINUX_HPP_
 #define KEGERATOR_QT_GPIO_GPIOLINUX_HPP_
 
-#include "GPIO.hpp"
+#include "../GPIO.hpp"
 #include "GPIOLinuxWatcher.hpp"
 
 namespace gpio {

@@ -2,15 +2,8 @@
 // Created by Antonio Jose Pires on 11/27/22.
 //
 
-#include <glog/logging.h>
-#ifdef __APPLE__
-#include "mac_stubs/gpiod.h"
-#endif
-#ifdef  __linux__
+#include "glog/logging.h"
 #include "gpiod.h"
-#endif
-
-#include "GPIOLinux.hpp"
 #include <QCoreApplication>
 
 int main(int argc, char *argv[]) {
@@ -50,8 +43,5 @@ int main(int argc, char *argv[]) {
     }
 
   }
-
-  auto x = gpio::GPIOLinux("/dev/gpiochip0");
-
   QCoreApplication::exec();
 }

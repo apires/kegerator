@@ -8,7 +8,7 @@
 #include <QThread>
 
 #ifdef __APPLE__
-#include "mac_stubs/gpiod.h"
+#include "../mac_stubs/gpiod.h"
 #endif
 #ifdef  __linux__
 #include "gpiod.h"
