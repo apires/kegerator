@@ -6,11 +6,12 @@
 #include "FakeGPIO.hpp"
 #include "glog/logging.h"
 #include <iostream>
+#include <utility>
 
 namespace gpio {
 
 FakeGPIO::FakeGPIO(const std::filesystem::path &watch_path)
-    : GPIO(), m_file(watch_path), m_pin(GPIOPin(0, false, m_file.fileName().toStdString())) {
+    : GPIO(), m_file(watch_path) {
   google::InitGoogleLogging("FakeGPIO");
 
   auto ok = m_file.open(QIODevice::ReadWrite);
@@ -20,7 +21,6 @@ FakeGPIO::FakeGPIO(const std::filesystem::path &watch_path)
 
   m_watcher.addPath(QString::fromStdString(watch_path));
   QFileSystemWatcher::connect(&m_watcher, &QFileSystemWatcher::fileChanged, [this]() {
-    DLOG(INFO) << "Socket changed.";
     OnFileChange();
   });
 
@@ -31,46 +31,50 @@ void FakeGPIO::OnFileChange() {
 
   auto buffer = m_file.readAll();
   bool ok = false;
-  auto pin = buffer.toUInt(&ok);
+  auto pin_number = buffer.toUInt(&ok);
   if (!ok) {
     DLOG(ERROR) << "Invalid pin command - " << buffer.toStdString();
-  } else {
-// Ok we have a valid pin. What do we do with it?
-//    auto x = m_signal_callback_map.find(pin);
-//    if (x != m_signal_callback_map.end()) {
-//      x->second(pin);
-//    } else {
-//      DLOG(INFO) << "We don't have a callback configured for pin(" << pin << ").";
-//    }
+    return;
   }
+  if (!m_pin_to_callback.contains(pin_number)) {
+    DLOG(INFO) << "We do not have a callback registered for pin " << pin_number;
+    return;
+  }
+  auto pin_callback = m_pin_to_callback[pin_number];
+  pin_callback(true);
 
+  // now that we've processed the file, we're going to truncate it
+  // so that the only line always reflect the pin being processed
   m_file.resize(0);
 }
 
 FakeGPIO::~FakeGPIO() {
+  GPIO::~GPIO();
   // Are we leaking the m_watcher members and fds?
   DLOG(INFO) << "Disposing FakeGPIO";
 
   m_file.remove();
 }
 std::vector<GPIOPin> FakeGPIO::pins() const {
-  return {
-      m_pin
-  };
+  auto out = std::vector<GPIOPin>();
+  out.reserve(static_cast<unsigned long>(m_pin_to_callback.size()));
 
-}
-GPIOPin FakeGPIO::pin(uint32_t index) const {
-  if (index > 0) {
-    throw "FIXME";
+  for (auto i = 0; i < m_pin_to_callback.size(); i++) {
+    out.emplace_back(pin(static_cast<uint16_t>(i)));
   }
-  return m_pin;
+  return out;
 }
-void FakeGPIO::onPinChange(const GPIOPin &pin, std::function<void(bool)>) {
+GPIOPin FakeGPIO::pin(uint16_t index) const {
+  auto pinName = QString("FakeGPIO[%s]").arg(m_file.fileName());
+  return {index, false, pinName.toStdString()};
 }
 
-extern "C" FakeGPIO *create(const std::filesystem::path &path) {
+GPIO *kegerator_create_gpio_device(const std::filesystem::path &path) {
   DLOG(INFO) << "Creating FakeGPIO";
   return new FakeGPIO(path);
+}
+void *kegerator_list_gpio_devices() {
+  return new std::vector<std::filesystem::path>{"/tmp/socket.keg"};
 }
 
 } // gpio

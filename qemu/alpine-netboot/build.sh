@@ -13,11 +13,11 @@ if { ! [ file exists build_artifacts ] } {
 if {[ file exists hda.img ]} {
     puts {Removing incomplete .img file...}
     system rm hda.img
-} else {
-    system qemu-img create -f qcow2 hda.img 4g
 }
 
-set SSH_KEY [exec ssh-add -l | grep Development]
+system qemu-img create -f qcow2 hda.img 4g
+
+set SSH_KEY [exec ssh-add -L | grep Development]
 spawn qemu-system-aarch64 \
  -m 4G \
  -cpu cortex-a57 \
@@ -26,10 +26,8 @@ spawn qemu-system-aarch64 \
  -initrd build_artifacts/initramfs-lts \
  -nographic \
  -hda hda.img \
-  -netdev user,id=mynet,net=192.168.76.0/24,dhcpstart=192.168.76.9 \
-  -device virtio-net-pci,netdev=mynet \
-  -netdev user,id=mynet2,hostfwd=::5555-:22 \
-  -device virtio-net-pci,netdev=mynet2 \
+ -netdev user,id=mynet2,hostfwd=::5555-:22 \
+ -device virtio-net-pci,netdev=mynet2 \
  -append "console=ttyAMA0,115200 ssh_key=\"$SSH_KEY\" ip=dhcp alpine_repo=http://dl-cdn.alpinelinux.org/alpine/latest-stable/main/ modloop=http://dl-cdn.alpinelinux.org/alpine/v3.17/releases/aarch64/netboot/modloop-lts"
 
 expect -exact "localhost login: "
@@ -42,10 +40,6 @@ send "qemu-alpine\r"
 expect -re {Which one do you want to initialize.*] }
 send -- "eth0\r"
 expect -re {Ip address for eth0.*] }
-send -- "dhcp\r"
-expect -re {Which one do you want to initialize.*] }
-send -- "eth1\r"
-expect -re {Ip address for eth1.*] }
 send -- "dhcp\r"
 expect -re {Do you want to do any manual network configuration.*] }
 send -- "n\r"
@@ -93,7 +87,7 @@ expect "/ # "
 send "apk update\r"
 expect -re {OK.*packages}
 
-send "apk add terminus-font ttf-inconsolata ttf-dejavu ttf-font-awesome\r"
+send "apk add terminus-font ttf-inconsolata ttf-dejavu ttf-font-awesome qemu-virtiofsd\r"
 expect -re {OK.*packages}
 expect "/ # "
 send "apk add qt6-qtmultimedia libgpiod glog  gst-plugins-ugly gst-plugins-good gst-plugins-bad\r"
@@ -109,6 +103,12 @@ expect "/ # "
 
 send "passwd -d root\r"
 expect "passwd: password for root changed by root"
+
+send "mkdir -p /kegerator.qt\r"
+expect "/ # "
+
+send "echo '//10.0.2.4/qemu /kegerator.qt   cifs    user=,pass=,vers=3.1  0 0' >> /etc/fstab\r"
+expect "/ # "
 
 send "exit\r"
 send "halt\r"

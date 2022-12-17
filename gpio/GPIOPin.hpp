@@ -12,9 +12,9 @@ class GPIOPin {
  public:
   GPIOPin(uint32_t pin_number, bool has_pullup, std::string pin_name);
  public:
-  [[nodiscard]] uint32_t PinNumber() const;
+  [[nodiscard]] uint32_t Number() const;
   [[nodiscard]] bool HasPullup() const;
-  [[nodiscard]] const std::string &PinName() const;
+  [[nodiscard]] const std::string &Name() const;
   friend std::ostream &operator<<(std::ostream &outs, const gpio::GPIOPin &p);
 
  private:

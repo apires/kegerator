@@ -10,10 +10,10 @@ namespace gpio {
 GPIOPin::GPIOPin(uint32_t pin_number, bool has_pullup, std::string pin_name)
     : m_pin_number(pin_number), m_pin_name(std::move(pin_name)), m_has_pullup(has_pullup) {}
 
-uint32_t GPIOPin::PinNumber() const {
+uint32_t GPIOPin::Number() const {
   return m_pin_number;
 }
-const std::string &GPIOPin::PinName() const {
+const std::string &GPIOPin::Name() const {
   return m_pin_name;
 }
 bool GPIOPin::HasPullup() const {

@@ -6,7 +6,6 @@ set(WITH_UNWIND OFF)
 set(WITH_GTEST OFF)
 
 set(CMAKE_CXX_STANDARD 20)
-set(BUILD_SHARED_LIBS OFF)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     add_subdirectory(vendor/glog)
@@ -28,6 +27,4 @@ target_link_libraries(kegerator_qt
         glog::glog
         KegeratorUI
         KegeratorPlayer
-        KegeratorGPIO
-        ${LibGPIOD_LIBRARIES}
-        )
+        KegeratorGPIO)

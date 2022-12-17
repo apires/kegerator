@@ -6,13 +6,7 @@
 #define KEGERATOR_QT_GPIO_MAC_STUBS_GPIOLINUXWATCHER_HPP_
 
 #include <QThread>
-
-#ifdef __APPLE__
-#include "../mac_stubs/gpiod.h"
-#endif
-#ifdef  __linux__
 #include "gpiod.h"
-#endif
 
 namespace gpio {
 
@@ -21,8 +15,8 @@ class GPIOLinuxWatcher : public QThread {
  protected:
   void run() override;
  public:
-  explicit GPIOLinuxWatcher(QObject *parent, std::string path)
-      : QThread(parent), m_path(std::move(path)) {}
+  explicit GPIOLinuxWatcher(std::string path)
+      : QThread(nullptr), m_path(std::move(path)) {}
   ~GPIOLinuxWatcher() override;
 
  public Q_SLOTS:

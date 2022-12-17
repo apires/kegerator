@@ -7,6 +7,7 @@
 
 #include <QFileSystemWatcher>
 #include <QFile>
+#include <QMap>
 #include "../GPIO.hpp"
 
 namespace gpio {
@@ -16,21 +17,20 @@ class FakeGPIO : public GPIO {
   explicit FakeGPIO(const std::filesystem::path &watch_path);
   ~FakeGPIO() override;
 
-  [[nodiscard]] virtual std::vector<GPIOPin> pins() const override;
-  [[nodiscard]] virtual GPIOPin pin(uint32_t index) const override;
-  virtual void onPinChange(const GPIOPin &pin, std::function<void(bool)>) override;
+  [[nodiscard]]  std::vector<GPIOPin> pins() const override;
+  [[nodiscard]] GPIOPin pin(uint16_t index) const override;
 
  private:
   QFileSystemWatcher m_watcher;
-  QFile m_file;
   QMetaObject::Connection m_file_changed_connection;
+
+  QFile m_file;
   void OnFileChange();
-  GPIOPin m_pin;
 };
 
-extern "C" FakeGPIO *create(const std::filesystem::path &path = "/tmp/socket.keg");
-extern "C" [[maybe_unused]] void destroy(FakeGPIO *it);
-
-} // gpio
+extern "C" GPIO *kegerator_create_gpio_device(const std::filesystem::path &path);
+extern "C" void *kegerator_list_gpio_devices();
+}
+// gpio
 
 #endif //KEGERATOR_QT_GPIO_FAKEGPIO_HPP_
