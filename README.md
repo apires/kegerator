@@ -10,21 +10,24 @@ memory, and also will respond to button presses in the GPIO input to trigger spe
 ## Structure:
 
 - /gpio
-    - Code for interacting with GPIO, including a fake one that gets triggered by writing a pin name to a socket in /tmp
-    - Supports libgpiod (ish?)
+  - Code for interacting with GPIO, including a fake one that gets triggered by writing a pin name to a socket in /tmp
+  - Supports libgpiod (ish?)
 - /qemu
-    - QEMU definitions for possible target hardware that could run this stuff, need to setup a way to build into
-      these emulators now
+  - QEMU definitions for possible target hardware that could run this stuff, need to setup a way to build into
+    these emulators now
+  - pi3 configuration has pi/raspberry user/pass combo
 - /player
-    - Code for playing the audio tracks
+  - Code for playing the audio tracks
 - /ui
-    - Guess?
+
+  - Guess?
 
 - Dockerfile.buildroot
-    - Creates an alpine docker image that CLion will use to build the linux version of kegerator.js
+  - Creates an alpine docker image that CLion will use to build the linux version of kegerator.js
 
 ## Requirements:
 
-- glog (should we use this since we already dependd on QT?)
+- glog
+  - (should we use this since we already dependd on QT?)
 
 Assets are licensed from Noun Project.

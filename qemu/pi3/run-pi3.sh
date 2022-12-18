@@ -6,9 +6,9 @@ if [[ ! -d "./image" ]]; then
     mkdir ./image
 fi
 
-if [[ ! -f "./image/root.img" ]]; then
+if [[ ! -f "./image/root.qcow2" ]]; then
     echo "Root image not found, making it"
-    curl https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2022-09-07/2022-09-22-raspios-bullseye-arm64-lite.img.xz -o 2022-09-22-raspios-bullseye-arm64-lite.img.xz
+    curl https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2022-09-26/2022-09-22-raspios-bullseye-arm64-lite.img.xz -o 2022-09-22-raspios-bullseye-arm64-lite.img.xz
     echo "Decompressing it"
     7z e 2022-09-22-raspios-bullseye-arm64-lite.img.xz 
     7z e 2022-09-22-raspios-bullseye-arm64-lite.img 0.fat
@@ -24,10 +24,11 @@ if [[ ! -f "./image/root.img" ]]; then
     rm 2022-09-22-raspios-bullseye-arm64-lite.img
     rm userconf.txt
     rm 2022-09-22-raspios-bullseye-arm64-lite.img.xz
+    rm ssh
 fi
 
 qemu-system-aarch64 \
-    -machine raspi3b \
+    -machine raspi3b -smp 4\
     -dtb image/bcm2710-rpi-3-b.dtb \
     -kernel image/kernel8.img \
     -drive format=qcow2,file=image/root.qcow2 \
