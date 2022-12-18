@@ -11,4 +11,6 @@ qemu/**/vmlinuz*
 qemu/**/initrd*
 qemu/**/initram*
 qemu/**/*img
+qemu/**/image/**
+qemu/**/*img.xz
 **/.DS_Store

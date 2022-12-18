@@ -6,16 +6,13 @@ pkg_search_module(LibGPIOD REQUIRED libgpiod)
 set(CMAKE_AUTOMOC ON)
 
 add_library(KegeratorLinuxGPIO SHARED
-        ../GPIO.cpp
-        ../GPIO.hpp
-        ../GPIOPin.cpp
-        ../GPIOPin.hpp
         GPIOLinux.cpp
         GPIOLinux.hpp
         GPIOLinuxWatcher.cpp
         GPIOLinuxWatcher.hpp)
 
 target_link_libraries(KegeratorLinuxGPIO PRIVATE
+        KegeratorGPIO
         Qt6::Core
         ${LibGPIOD_LIBRARIES})
 
