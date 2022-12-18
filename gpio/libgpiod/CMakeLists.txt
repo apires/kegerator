@@ -6,10 +6,10 @@ pkg_search_module(LibGPIOD REQUIRED libgpiod)
 set(CMAKE_AUTOMOC ON)
 
 add_library(KegeratorLinuxGPIO SHARED
-        GPIOLinux.cpp
-        GPIOLinux.hpp
-        GPIOLinuxWatcher.cpp
-        GPIOLinuxWatcher.hpp)
+        LibGPIOd.cpp
+        LibGPIOd.hpp
+        LibGPIOdWatcher.cpp
+        LibGPIOdWatcher.hpp)
 
 target_link_libraries(KegeratorLinuxGPIO PRIVATE
         KegeratorGPIO

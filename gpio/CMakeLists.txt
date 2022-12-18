@@ -21,6 +21,6 @@ target_link_libraries(GPIOTestThing PRIVATE
 
 add_subdirectory(fake)
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    add_subdirectory(linux)
+    add_subdirectory(libgpiod)
 endif ()
 

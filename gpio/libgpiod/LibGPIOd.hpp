@@ -11,10 +11,10 @@
 
 namespace gpio {
 
-class GPIOLinux : public gpio::GPIO {
+class LibGPIOd : public gpio::GPIO {
  public:
-  explicit GPIOLinux(const std::filesystem::path &device);
-  ~GPIOLinux() override;
+  explicit LibGPIOd(const std::filesystem::path &device);
+  ~LibGPIOd() override;
 
   [[nodiscard]]  std::vector<GPIOPin> pins() const override;
   [[nodiscard]]  GPIOPin pin(uint16_t pin) const override;

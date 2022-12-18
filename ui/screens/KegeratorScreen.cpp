@@ -66,6 +66,7 @@ QIcon KegeratorScreen::getMenuIconRepresentation(MenuIcon icon) {
       return QIcon(":kegerator/svg/close.svg");
     }
   }
+  throw std::runtime_error("Invalid icon enum passed in to getMenuIconRepresentation");
 }
 
 void KegeratorScreen::InitializeBody() {

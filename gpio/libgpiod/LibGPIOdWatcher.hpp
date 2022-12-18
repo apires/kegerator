@@ -10,14 +10,14 @@
 
 namespace gpio {
 
-class GPIOLinuxWatcher : public QThread {
+class QTWatcher : public QThread {
  Q_OBJECT
  protected:
   void run() override;
  public:
-  explicit GPIOLinuxWatcher(std::string path)
+  explicit QTWatcher(std::string path)
       : QThread(nullptr), m_path(std::move(path)) {}
-  ~GPIOLinuxWatcher() override;
+  ~QTWatcher() override;
 
  public Q_SLOTS:
   void UpdatePins(std::vector<uint32_t> pins);

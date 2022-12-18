@@ -2,13 +2,13 @@
 // Created by Antonio Jose Pires on 11/28/22.
 //
 
-#include "GPIOLinuxWatcher.hpp"
+#include "LibGPIOdWatcher.hpp"
 #include "glog/logging.h"
 #include "poll.h"
 
 namespace gpio {
 
-void GPIOLinuxWatcher::run() {
+void LibGPIOdWatcher::run() {
   auto ts = timespec{10, 0};
   LOG(INFO) << "Starting monitoring loop for GPIO";
   gpiod_ctxless_event_monitor_multiple(m_path.c_str(),
@@ -16,18 +16,18 @@ void GPIOLinuxWatcher::run() {
                                        m_pins.data(),
                                        static_cast<unsigned int>(m_pins.size()),
                                        true, // PULL_UP?
-                                       "Kegerator::GPIOLinux",
+                                       "Kegerator::LibGPIOd",
                                        &ts,
-                                       &GPIOLinuxWatcher::onPollEventRaised,
-                                       &GPIOLinuxWatcher::onEdgeEventRaised,
+                                       &LibGPIOdWatcher::onPollEventRaised,
+                                       &LibGPIOdWatcher::onEdgeEventRaised,
                                        this);
 }
 
-int GPIOLinuxWatcher::onEdgeEventRaised(int event_type, // Always GPIOD_CTXLESS_EVENT_RISING_EDGE ?
-                                        unsigned int offset, // GPIO pin
-                                        const timespec *timestamp,
-                                        void *watcher_ptr) {
-  auto watcher = static_cast<GPIOLinuxWatcher *>(watcher_ptr);
+int LibGPIOdWatcher::onEdgeEventRaised(int event_type, // Always GPIOD_CTXLESS_EVENT_RISING_EDGE ?
+                                       unsigned int offset, // GPIO pin
+                                       const timespec *timestamp,
+                                       void *watcher_ptr) {
+  auto watcher = static_cast<LibGPIOdWatcher *>(watcher_ptr);
   emit watcher->pinDepressed(offset);
   if (watcher->m_thread_closing) {
     LOG(INFO) << "Done with the loop.";
@@ -37,7 +37,7 @@ int GPIOLinuxWatcher::onEdgeEventRaised(int event_type, // Always GPIOD_CTXLESS_
   }
 };
 
-void GPIOLinuxWatcher::UpdatePins(std::vector<uint32_t> pins) {
+void LibGPIOdWatcher::UpdatePins(std::vector<uint32_t> pins) {
   m_thread_closing = true;
   this->quit();
   this->wait();
@@ -48,12 +48,12 @@ void GPIOLinuxWatcher::UpdatePins(std::vector<uint32_t> pins) {
   this->start();
 }
 
-int GPIOLinuxWatcher::onPollEventRaised(unsigned int num_lines,
-                                        gpiod_ctxless_event_poll_fd *fds,
-                                        const timespec *timeout,
-                                        void *watcher_ptr) {
+int LibGPIOdWatcher::onPollEventRaised(unsigned int num_lines,
+                                       gpiod_ctxless_event_poll_fd *fds,
+                                       const timespec *timeout,
+                                       void *watcher_ptr) {
 
-  auto watcher = static_cast<GPIOLinuxWatcher *>(watcher_ptr);
+  auto watcher = static_cast<LibGPIOdWatcher *>(watcher_ptr);
 
   if (watcher->m_thread_closing) {
     LOG(INFO) << "Done with the loop.";
@@ -101,7 +101,7 @@ int GPIOLinuxWatcher::onPollEventRaised(unsigned int num_lines,
   return ret;
 }
 
-GPIOLinuxWatcher::~GPIOLinuxWatcher() {
+LibGPIOdWatcher::~LibGPIOdWatcher() {
   m_thread_closing = true;
   this->quit();
   this->wait();

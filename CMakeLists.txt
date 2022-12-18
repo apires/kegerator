@@ -7,15 +7,11 @@ set(WITH_GTEST OFF)
 
 set(CMAKE_CXX_STANDARD 20)
 
-if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    add_subdirectory(vendor/glog)
-elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    set(WITH_UNWIND ON)
-    find_package(glog 0.6.0 REQUIRED)
-else ()
-    message(FATAL_ERROR, "We don't know how to build for ${CMAKE_SYSTEM_NAME}")
-endif ()
+find_package(glog 0.6.0 REQUIRED)
 
+if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set(WITH_UNWIND ON)
+endif ()
 
 add_subdirectory(ui)
 add_subdirectory(player)

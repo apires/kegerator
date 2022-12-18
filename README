@@ -1,7 +1,0 @@
-Figured I'd start to learn CPP inspired by AK building SerenityOS on youtube.
-
-We have a kegerator at work that we'd like to play interesting sound events when somebody pours a beer.
-
-This project will run on a RaspberryPI w/ a touchscreen and allow people to select random audio clips that we have on memory, and also will respond to button presses in the GPIO input to trigger specific or random clips.
-
-Assets are licensed from Noun Project.
