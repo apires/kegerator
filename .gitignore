@@ -1,4 +1,5 @@
 /cmake-build-*/**
+build
 .idea/workspace.xml
 .idea/usage.statistics.xml
 .idea/shelf/
@@ -13,4 +14,5 @@ qemu/**/initram*
 qemu/**/*img
 qemu/**/image/**
 qemu/**/*img.xz
+qemu/**/**qcow2
 **/.DS_Store

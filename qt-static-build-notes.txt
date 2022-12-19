@@ -1,0 +1,38 @@
+./configure -opensource -static -eglfs \
+-nomake examples \
+-nomake tests \
+-skip qtlanguageserver \
+-skip qtdeclarative \
+-skip qtquicktimeline \
+-skip qtquick3d \
+-skip qtdatavis3d \
+-skip qtconnectivity \
+-skip qtcoap \
+-skip qtcharts \
+-skip qtactiveqt \
+-skip qt5compat \
+-skip qt3d \
+-skip qtwebview \
+-skip qtwebsockets \
+-skip qtwebengine \
+-skip qtwebchannel \
+-skip qtwayland \
+-skip qtvirtualkeyboard \
+-skip qttranslations \
+-skip qttools \
+-skip qtspeech \
+-skip qtserialport \
+-skip qtserialbus \
+-skip qtsensors \
+-skip qtscxml \
+-skip qtremoteobjects \
+-skip qtquick3dphysics \
+-skip qtpositioning \
+-skip qtopcua \
+-skip qtnetworkauth \
+-skip qtmqtt \
+-skip qtlottie \
+-skip qthttpserver \
+-skip qtdoc
+
+// directfb-dev perl
