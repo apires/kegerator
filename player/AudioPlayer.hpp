@@ -8,16 +8,17 @@
 #include "glog/logging.h"
 #include <QAudioOutput>
 #include <QMediaPlayer>
+#include <filesystem>
 
 namespace player {
 
 class AudioPlayer {
  public:
   explicit AudioPlayer();
-  void setSource(const std::string &path);
+  void setSource(const std::filesystem::path &path);
   void play();
   void stop();
-  bool isPlaying() { return m_player->playbackState() == QMediaPlayer::PlaybackState::PlayingState; }
+  bool isPlaying();
 
   std::function<void(qint64 current, qint64 duration)> onProgress;
   std::function<void()> onStart;
@@ -25,8 +26,8 @@ class AudioPlayer {
 
   // private
  private:
-  std::unique_ptr<QMediaPlayer> m_player;
-  std::unique_ptr<QAudioOutput> m_output;
+  QAudioOutput m_output;
+  QMediaPlayer m_player;
   qint64 m_duration;
 };
 

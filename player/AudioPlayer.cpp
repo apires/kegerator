@@ -3,27 +3,23 @@
 //
 
 #include "AudioPlayer.hpp"
+#include "AudioTrack.hpp"
 
 namespace player {
-AudioPlayer::AudioPlayer() {
 
-  m_output = std::make_unique<QAudioOutput>();
-  m_player = std::make_unique<QMediaPlayer>();
-  m_player->setAudioOutput(m_output.get());
+AudioPlayer::AudioPlayer() : m_output(), m_player() {
 
-  // Do we need to delete these signals, or do they go away when the players get
-  // disposed?
-  QObject::connect(m_player.get(), &QMediaPlayer::durationChanged,
+  QObject::connect(&m_player, &QMediaPlayer::durationChanged,
                    [&](const qint64 newDuration) { m_duration = newDuration; });
 
-  QObject::connect(m_player.get(), &QMediaPlayer::positionChanged,
+  QObject::connect(&m_player, &QMediaPlayer::positionChanged,
                    [&](const qint64 newPosition) {
                      if (onProgress != nullptr) {
                        onProgress(newPosition, m_duration);
                      }
                    });
 
-  QObject::connect(m_player.get(), &QMediaPlayer::mediaStatusChanged,
+  QObject::connect(&m_player, &QMediaPlayer::mediaStatusChanged,
                    [&](const auto status) {
                      if (status == QMediaPlayer::MediaStatus::EndOfMedia) {
                        if (onProgress)
@@ -32,20 +28,31 @@ AudioPlayer::AudioPlayer() {
                          onEnd();
                      }
                    });
+
+  QObject::connect(&m_player, &QMediaPlayer::errorOccurred,
+                   [&](QMediaPlayer::Error error, const QString &errorString) {
+                     DLOG(ERROR) << errorString.toStdString();
+                   });
+
+  m_player.setAudioOutput(&m_output);
+  m_player.play();
+
 }
-void AudioPlayer::setSource(const std::string &path) {
-  m_player->setSource(QUrl::fromLocalFile(QString::fromStdString(path)));
+
+void AudioPlayer::setSource(const std::filesystem::path &path) {
+  m_player.setSource(QUrl::fromLocalFile(QString::fromStdString(path)));
 }
 void AudioPlayer::play() {
-  if (onStart)
-    onStart();
-  m_player->play();
+  if (onStart) onStart();
+  m_player.play();
 }
 
 void AudioPlayer::stop() {
-  if (onEnd)
-    onEnd();
-  m_player->stop();
+  if (onEnd) onEnd();
+  m_player.stop();
+}
+bool AudioPlayer::isPlaying() {
+  return m_player.playbackState() == QMediaPlayer::PlaybackState::PlayingState;
 }
 
 } // namespace player

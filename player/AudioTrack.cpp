@@ -9,8 +9,13 @@
 #include <QMediaPlayer>
 #include <QtCore>
 #include <QMediaMetaData>
+#include <utility>
 
 namespace player {
+
+AudioTrack::AudioTrack(std::filesystem::path path) : m_path(std::move(path)) {
+  probeMetadata();
+}
 
 void AudioTrack::probeMetadata() {
 

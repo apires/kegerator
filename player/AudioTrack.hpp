@@ -7,14 +7,13 @@
 
 #include "AudioPlayer.hpp"
 #include <string>
+#include <filesystem>
+
 namespace player {
 
 class AudioTrack {
  public:
-  explicit AudioTrack(const std::string &path) {
-    m_path = path;
-    probeMetadata();
-  }
+  explicit AudioTrack(std::filesystem::path path);
 
   static std::vector<AudioTrack> SlurpDirectory(const std::string &directory);
 
@@ -27,7 +26,7 @@ class AudioTrack {
   void Play(AudioPlayer &player) const;
 
  private:
-  std::string m_path;
+  const std::filesystem::path m_path;
   std::string m_artist;
   std::string m_title;
   void probeMetadata();
