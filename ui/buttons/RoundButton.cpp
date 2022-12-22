@@ -7,17 +7,18 @@
 
 RoundButton::RoundButton(const QString &text, QWidget *parent = nullptr)
     : QPushButton(text, parent) {
-  setStyleSheet("QPushButton { "
-                "width: 60px;"
-                "height: 60px;"
-                "font-size: 24px;"
-                "border: 4px solid #107ABC;"
-                "background-color: #FAFAFA;"
-                "border-radius: 30px;"
-                "}"
-                "QPushButton:pressed {"
-                "background-color: #F2F2F2;"
-                "}");
+  setStyleSheet(R"(QPushButton {
+                      width: 60px;
+                      height: 60px;
+                      font-size: 24px;
+                      border: 4px solid #107ABC;
+                      background-color: #FAFAFA;
+                      border-radius: 30px;
+                    }
+                    QPushButton:pressed {
+                      background-color: #F2F2F2;
+                    }
+  )");
 
   QObject::connect(this, &QPushButton::clicked, [this, text]() {
     if (onClick == nullptr) {
@@ -30,17 +31,18 @@ RoundButton::RoundButton(const QString &text, QWidget *parent = nullptr)
 
 RoundButton::RoundButton(QIcon icon, const QString &text, QWidget *parent = nullptr)
     : QPushButton(icon, text, parent) {
-  setStyleSheet("QPushButton { "
-                "width: 60px;"
-                "height: 60px;"
-                "qproperty-iconSize: 36px;"
-                "background-color: #FAFAFA;"
-                "border: 4px solid darkgray;"
-                "border-radius: 30px;"
-                "}"
-                "QPushButton:pressed {"
-                "background-color: #F2F2F2;"
-                "}");
+  setStyleSheet(R"(QPushButton {
+                      width: 60px;
+                      height: 60px;
+                      qproperty-iconSize: 36px;
+                      border: 4px solid darkgrey;
+                      background-color: #FAFAFA;
+                      border-radius: 30px;
+                    }
+                    QPushButton:pressed {
+                      background-color: #F2F2F2;
+                    }
+  )");
 
   QObject::connect(this, &QPushButton::clicked, [this, text]() {
     if (onClick == nullptr) {
