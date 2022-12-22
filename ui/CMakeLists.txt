@@ -4,6 +4,14 @@ find_package(Qt6 COMPONENTS
         Svg
         REQUIRED)
 
+qt_add_library(KegeratorToast
+        Toast.cpp
+        Toast.hpp)
+
+target_link_libraries(KegeratorToast PRIVATE
+        glog::glog
+        Qt::Widgets)
+
 qt_add_library(KegeratorUI
         Player.cpp
         layouts/FlowLayout.cpp
@@ -13,7 +21,7 @@ qt_add_library(KegeratorUI
         screens/SoundboardScreen.cpp
         screens/SoundboardScreen.hpp
         screens/KegeratorScreen.cpp
-        screens/KegeratorScreen.hpp MainWindow.cpp MainWindow.hpp)
+        screens/KegeratorScreen.hpp MainWindow.cpp MainWindow.hpp Toast.cpp Toast.hpp)
 
 
 target_link_libraries(KegeratorUI

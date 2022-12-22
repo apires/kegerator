@@ -10,6 +10,7 @@ RoundButton::RoundButton(const QString &text, QWidget *parent = nullptr)
   setStyleSheet("QPushButton { "
                 "width: 60px;"
                 "height: 60px;"
+                "font-size: 24px;"
                 "border: 4px solid #107ABC;"
                 "background-color: #FAFAFA;"
                 "border-radius: 30px;"

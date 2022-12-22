@@ -6,6 +6,7 @@
 #include <QDir>
 #include <QFileDialog>
 #include "Kegerator.hpp"
+#include "ui/Toast.hpp"
 
 Kegerator::Kegerator() {
   BindPlayerEvents();
@@ -23,6 +24,10 @@ void Kegerator::ReloadTracks() {
     DLOG(INFO) << "Loading track path from " << path;
     std::move(track.begin(), track.end(), std::back_inserter(m_tracks));
   }
+  m_window.toast()->ShowInfo(QString("Loaded %1 track%2.")
+                                 .arg(m_tracks.size())
+                                 .arg(m_tracks.size() == 1 ? "" : "s"));
+
   ReloadButtons();
 }
 
@@ -33,15 +38,30 @@ void Kegerator::PlayRandomTrack() {
 }
 
 void Kegerator::PlayTrack(const player::AudioTrack &t) {
-  m_window.soundboard()->SetPlayerText(QString::fromStdString(t.GetDisplayString()));
+  m_window.soundboard()->SetPlayerText(QString::fromStdString(t.GetTrackName()));
   t.Play(m_player);
+}
+
+QString Kegerator::getSoundboardButtonLabel(const player::AudioTrack &t) {
+
+  if (!t.GetArtist().empty() && !t.GetTitle().empty()) {
+    return QString("%1%2").arg(t.GetArtist()[0]).arg(t.GetTitle()[0]);
+  }
+  if (t.GetArtist().empty() && !t.GetTitle().empty()) {
+    return QString::fromStdString(t.GetTitle().substr(0, 2));
+  }
+  if (!t.GetArtist().empty() && t.GetTitle().empty()) {
+    // If we only have an artist, what do we do?
+    return QString::fromStdString(t.GetTitle().substr(0, 2));
+  }
+  return {"NADA"};
 }
 
 void Kegerator::ReloadButtons() {
   DLOG(INFO) << "Reloading Buttons";
   for (const auto &t : m_tracks) {
-    DLOG(INFO) << "Found track " << t.GetDisplayString();
-    auto b = new RoundButton(t.GetDisplayString(), nullptr);
+    DLOG(INFO) << "Found track " << t;
+    auto b = new RoundButton(getSoundboardButtonLabel(t), nullptr);
     b->onClick = [&]() { PlayTrack(t); };
     m_window.soundboard()->AddButton(b);
   }

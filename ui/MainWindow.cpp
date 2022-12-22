@@ -10,7 +10,8 @@ namespace ui {
 MainWindow::MainWindow() : QWidget(nullptr, Qt::WindowType::Window),
                            m_root(this),
                            m_configuration_screen(&m_root),
-                           m_soundboard_screen(&m_root) {
+                           m_soundboard_screen(&m_root),
+                           m_toast(this) {
   m_root.setMinimumSize(800, 400);
 
   m_configuration_screen.InitializeBody();
@@ -35,6 +36,10 @@ ConfigurationScreen *MainWindow::configuration() {
 }
 SoundboardScreen *MainWindow::soundboard() {
   return &m_soundboard_screen;
+}
+
+Toast *MainWindow::toast() {
+  return &m_toast;
 }
 
 }

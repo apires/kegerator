@@ -9,6 +9,7 @@
 #include <QWidget>
 #include "screens/SoundboardScreen.hpp"
 #include "screens/ConfigurationScreen.hpp"
+#include "Toast.hpp"
 
 namespace ui {
 class MainWindow : public QWidget {
@@ -16,11 +17,13 @@ class MainWindow : public QWidget {
   explicit MainWindow();
   SoundboardScreen *soundboard();
   ConfigurationScreen *configuration();
+  Toast *toast();
 
  private:
   QStackedWidget m_root;
   ConfigurationScreen m_configuration_screen;
   SoundboardScreen m_soundboard_screen;
+  Toast m_toast;
 };
 }
 

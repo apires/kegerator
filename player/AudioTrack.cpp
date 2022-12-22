@@ -58,9 +58,8 @@ void AudioTrack::Play(AudioPlayer &player) const {
   player.play();
 }
 
-const std::string AudioTrack::GetDisplayString() const {
+std::string AudioTrack::GetTrackName() const {
   auto title = std::stringstream();
-
   if (!GetArtist().empty() && !GetTitle().empty()) {
     title << GetArtist() << " - " << GetTitle();
   } else if (GetArtist().empty() && !GetTitle().empty()) {
@@ -70,6 +69,10 @@ const std::string AudioTrack::GetDisplayString() const {
     title << "Something by " << GetArtist();
   }
   return title.str();
+}
+
+std::ostream &operator<<(std::ostream &os, const player::AudioTrack &p) {
+  return os << p.GetTrackName();
 }
 
 } // namespace player

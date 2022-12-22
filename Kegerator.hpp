@@ -32,6 +32,7 @@ class Kegerator {
 
   void PlayTrack(const player::AudioTrack &t);
   void BuildConfigurationMenu();
+  static QString getSoundboardButtonLabel(const player::AudioTrack &t);
 };
 
 #endif // KEGERATOR_QT__KEGERATOR_HPP_
