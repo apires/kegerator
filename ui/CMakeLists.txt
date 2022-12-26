@@ -21,7 +21,13 @@ qt_add_library(KegeratorUI
         screens/SoundboardScreen.cpp
         screens/SoundboardScreen.hpp
         screens/KegeratorScreen.cpp
-        screens/KegeratorScreen.hpp MainWindow.cpp MainWindow.hpp Toast.cpp Toast.hpp)
+        screens/KegeratorScreen.hpp
+        MainWindow.cpp
+        MainWindow.hpp
+        Toast.cpp
+        Toast.hpp)
+
+add_subdirectory(color)
 
 
 target_link_libraries(KegeratorUI

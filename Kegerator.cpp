@@ -7,6 +7,7 @@
 #include <QFileDialog>
 #include "Kegerator.hpp"
 #include "ui/Toast.hpp"
+#include "ui/color/ColorPicker.hpp"
 
 Kegerator::Kegerator() {
   BindPlayerEvents();
@@ -63,6 +64,7 @@ void Kegerator::ReloadButtons() {
     DLOG(INFO) << "Found track " << t;
     auto b = new RoundButton(getSoundboardButtonLabel(t), nullptr);
     b->onClick = [&]() { PlayTrack(t); };
+    b->SetColor(ui::ColorPicker::forPath(t.GetPath()));
     m_window.soundboard()->AddButton(b);
   }
 

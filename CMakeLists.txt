@@ -21,6 +21,7 @@ add_executable(kegerator_qt main.cpp Kegerator.cpp)
 
 target_link_libraries(kegerator_qt
         glog::glog
+        color
         KegeratorUI
         KegeratorPlayer
         KegeratorGPIO)
