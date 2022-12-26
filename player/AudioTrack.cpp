@@ -52,7 +52,7 @@ std::vector<AudioTrack> AudioTrack::SlurpDirectory(const std::string &s_director
   auto tracks = std::vector<AudioTrack>();
 
   for (const auto &entry : dir->entryList(QDir::Filters::enum_type::Files)) {
-    auto p = dir->absolutePath().toStdString() + "/" + entry.toStdString();
+    auto p = AudioTrack(dir->absolutePath().toStdString() + "/" + entry.toStdString());
     tracks.emplace_back(p);
   }
 
@@ -61,6 +61,10 @@ std::vector<AudioTrack> AudioTrack::SlurpDirectory(const std::string &s_director
 void AudioTrack::Play(AudioPlayer &player) const {
   player.setSource(m_path);
   player.play();
+}
+
+std::filesystem::path AudioTrack::GetPath() const {
+  return m_path;
 }
 
 std::string AudioTrack::GetTrackName() const {
