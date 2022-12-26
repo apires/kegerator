@@ -2,8 +2,29 @@
 // Created by Antonio Jose Pires on 11/13/22.
 //
 
+#include <QRandomGenerator>
 #include "RoundButton.hpp"
 #include "glog/logging.h"
+
+void RoundButton::SetColor(QColor color) {
+  auto border = QColor();
+  auto pressed = QColor();
+  border.setHsl(color.hue(), color.hslSaturation(), color.lightness() - 76);
+  pressed.setHsl(color.hue(), color.hslSaturation() - 80, color.lightness());
+
+  setStyleSheet(QString(R"(QPushButton {
+                      width: 60px;
+                      height: 60px;
+                      font-size: 24px;
+                      border: 4px solid %1;
+                      background-color: %2;
+                      border-radius: 30px;
+                    }
+                    QPushButton:pressed {
+                      background-color: %3;
+                    }
+  )").arg(border.name(), color.name(), pressed.name()));
+}
 
 RoundButton::RoundButton(const QString &text, QWidget *parent = nullptr)
     : QPushButton(text, parent) {

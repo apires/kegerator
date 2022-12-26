@@ -14,6 +14,7 @@ class RoundButton : public QPushButton {
   explicit RoundButton(const std::string &text, QWidget *parent);
   explicit RoundButton(QIcon icon, const QString &text, QWidget *parent);
   std::function<void()> onClick;
+  void SetColor(QColor color);
 };
 
 #endif // KEGERATOR_QT_UI_ROUNDBUTTON_HPP_
